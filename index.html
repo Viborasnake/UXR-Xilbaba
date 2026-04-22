@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Xibalba — Presentación Ejecutiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#8B2500;--gold:#C17F00;--gold-l:#E8A800;
+  --cream:#FFF3E0;--green:#3A6B45;
+  --dark:#1A1009;--mid:#3D2E1E;--gray:#6B5B4E;--lg:#A89A8E;
+  --bg:#F7F2ED;--cbg:#FFFCF8;--border:rgba(139,37,0,0.12);
+  --fd:'Playfair Display',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--dark);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+nav{position:sticky;top:0;z-index:100;background:var(--dark);border-bottom:2px solid var(--red);padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-brand{font-family:var(--fd);font-size:1.15rem;color:var(--gold-l);letter-spacing:.05em;text-decoration:none}
+.nav-brand span{color:var(--cream);font-size:.7rem;font-family:var(--fb);font-weight:300;letter-spacing:.1em;display:block;text-transform:uppercase;margin-top:-2px}
+.nav-pg{font-size:.8rem;color:var(--lg);letter-spacing:.08em}
+.pb{position:fixed;top:52px;left:0;height:2px;background:var(--gold);z-index:99;width:0%;transition:width .1s}
+
+.slide{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:3rem 1.25rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.slide-lbl{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.slide-lbl::before{content:'';display:inline-block;width:20px;height:2px;background:var(--gold);flex-shrink:0}
+h2.stitle{font-family:var(--fd);font-size:clamp(1.85rem,6vw,2.6rem);line-height:1.15;color:var(--dark);margin-bottom:1rem;font-weight:700}
+.sbody{font-size:1.05rem;color:var(--gray);line-height:1.7}
+
+.slide-dark{background:var(--dark)}
+.slide-dark h2.stitle{color:var(--cream)}
+.slide-dark .slide-lbl{color:var(--gold-l)}
+.slide-dark .slide-lbl::before{background:var(--gold-l)}
+.slide-red{background:var(--red)}
+.slide-red h2.stitle{color:var(--cream)}
+.slide-red .slide-lbl{color:var(--gold-l)}
+.slide-red .slide-lbl::before{background:var(--gold-l)}
+.slide-cream{background:var(--cream)}
+
+/* COVER */
+#cover{background:var(--dark);min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 1.25rem 3.5rem;position:relative;overflow:hidden}
+.cv-tl{position:absolute;top:0;left:0;width:0;height:0;border-style:solid;border-width:140px 140px 0 0;border-color:var(--red) transparent transparent transparent}
+.cv-br{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 90px 90px;border-color:transparent transparent var(--red) transparent}
+.cv-ey{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.75rem}
+.cv-t{font-family:var(--fd);font-size:clamp(4rem,18vw,8rem);font-weight:900;color:var(--cream);line-height:.95;letter-spacing:-.02em;margin-bottom:.5rem}
+.cv-st{font-size:.9rem;font-weight:300;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem}
+.cv-rule{width:48px;height:3px;background:var(--red);margin-bottom:1.5rem}
+.cv-dt{font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:.4rem;line-height:1.3}
+.cv-mt{font-size:.85rem;color:rgba(255,243,224,.5);line-height:1.6}
+.cv-bdg{display:inline-block;margin-top:1.25rem;background:var(--red);color:var(--cream);font-size:.8rem;font-weight:600;padding:.35rem .85rem;border-radius:20px;letter-spacing:.05em}
+
+/* RESUMEN EJECUTIVO */
+.re-hero{background:var(--dark);border-radius:14px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid var(--gold)}
+.re-hero-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.re-hero-text{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--cream);line-height:1.3}
+.re-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.re-card{background:var(--cbg);border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem}
+.re-card-num{font-family:var(--fd);font-size:2rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:.25rem}
+.re-card-label{font-size:.82rem;color:var(--dark);font-weight:600;line-height:1.4;margin-bottom:.2rem}
+.re-card-note{font-size:.72rem;color:var(--gray);line-height:1.4;font-style:italic}
+.re-finding{display:flex;gap:.75rem;align-items:flex-start;background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:.6rem}
+.re-finding-icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.re-finding-text{font-size:.9rem;color:var(--dark);line-height:1.55}
+.re-finding-text strong{color:var(--red)}
+.re-mandate{background:var(--red);border-radius:12px;padding:1rem 1.1rem;margin-top:.75rem}
+.re-mandate-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,243,224,.6);margin-bottom:.35rem}
+.re-mandate-text{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--cream);line-height:1.35}
+
+/* STAT GRID */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.25rem}
+.sc{background:var(--cbg);border:1px solid var(--border);border-radius:12px;padding:1rem;border-left:3px solid var(--gold)}
+.sn{font-family:var(--fd);font-size:2.2rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:.3rem}
+.sl{font-size:.82rem;color:var(--gray);line-height:1.4}
+
+/* INSIGHT BOX per question */
+.qinsight{margin-top:.9rem;background:rgba(139,37,0,.06);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:.8rem 1rem}
+.qinsight-label{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.3rem}
+.qinsight-text{font-size:.92rem;color:var(--mid);line-height:1.6;font-weight:500}
+.slide-dark .qinsight{background:rgba(255,255,255,.07);border-left-color:var(--gold-l)}
+.slide-dark .qinsight-label{color:var(--gold-l)}
+.slide-dark .qinsight-text{color:rgba(255,243,224,.85);font-weight:400}
+.slide-cream .qinsight{background:rgba(139,37,0,.07)}
+
+/* PROFILE CARDS */
+.pc{border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid var(--border)}
+.pc.a{background:#FFF8F0;border-left:4px solid var(--red)}
+.pc.b{background:#F2FFF5;border-left:4px solid var(--green)}
+.ptag{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:.25rem .6rem;border-radius:20px;display:inline-block;margin-bottom:.6rem}
+.ptag.a{background:var(--red);color:var(--cream)}
+.ptag.b{background:var(--green);color:#fff}
+.pname{font-family:var(--fd);font-size:1.45rem;font-weight:700;color:var(--dark);margin-bottom:.2rem}
+.psub{font-size:.82rem;color:var(--gray);margin-bottom:.9rem}
+.pr{display:flex;gap:.5rem;margin-bottom:.45rem;font-size:.87rem;line-height:1.4}
+.prl{font-weight:600;color:var(--dark);min-width:70px;flex-shrink:0}
+.prv{color:var(--gray)}
+.parch{margin-top:.75rem;background:#fff;border-radius:8px;padding:.6rem .75rem;font-size:.84rem;line-height:1.4}
+.parch strong{color:var(--red)}
+.pq{margin-top:.75rem;font-style:italic;font-size:.84rem;color:var(--gray);border-left:2px solid var(--gold);padding-left:.65rem;line-height:1.5}
+
+/* BAR CHARTS */
+.csec{margin-top:1.25rem}
+.ctitle{font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:.75rem}
+.br{margin-bottom:.8rem}
+.bh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.3rem}
+.bl{font-size:.9rem;color:var(--dark);line-height:1.3;max-width:75%}
+.bp{font-size:.82rem;font-weight:600;color:var(--red);white-space:nowrap}
+.bt{height:9px;background:rgba(139,37,0,.1);border-radius:4px;overflow:hidden}
+.bf{height:100%;border-radius:4px;background:var(--red);transition:width .6s ease}
+.bf.g{background:var(--gold)}
+.bf.gn{background:var(--green)}
+.slide-dark .ctitle{color:rgba(255,243,224,.5)}
+.slide-dark .bl{color:rgba(255,243,224,.9)}
+.slide-dark .bp{color:var(--gold-l)}
+.slide-dark .bt{background:rgba(255,255,255,.1)}
+.slide-dark .bf{background:var(--gold-l)}
+
+/* DIVIDER */
+.sdiv{display:flex;align-items:center;gap:.75rem;margin:1.5rem 0}
+.sdiv::before,.sdiv::after{content:'';flex:1;height:1px;background:var(--border)}
+.sdiv span{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;font-weight:600}
+
+/* PAIN POINTS */
+.pl{margin-top:1.25rem;display:flex;flex-direction:column;gap:.65rem}
+.pi{display:flex;align-items:center;gap:.65rem;font-size:.88rem;line-height:1.3;color:rgba(255,243,224,.9)}
+.pbw{flex:1;height:7px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;min-width:60px}
+.pbf{height:100%;border-radius:3px;background:var(--gold-l)}
+.pcnt{font-weight:700;color:var(--gold-l);min-width:20px;text-align:right;font-size:.85rem}
+.pll{flex:2}
+
+/* VERBATIM */
+.vl{margin-top:1rem;display:flex;flex-direction:column;gap:.6rem}
+.vi{background:rgba(255,255,255,.07);border-radius:10px;padding:.75rem .9rem;font-style:italic;font-size:.88rem;color:rgba(255,243,224,.85);line-height:1.55;border-left:2px solid var(--gold)}
+
+/* INSIGHTS */
+.il{margin-top:1.25rem;display:flex;flex-direction:column;gap:.75rem}
+.ii{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:12px;padding:1rem;display:flex;gap:.75rem;align-items:flex-start}
+.in{font-family:var(--fd);font-size:1.6rem;font-weight:900;color:var(--gold-l);line-height:1;min-width:36px;flex-shrink:0;margin-top:-2px}
+.ititle{font-size:.95rem;font-weight:600;color:var(--cream);margin-bottom:.25rem;line-height:1.3}
+.idesc{font-size:.84rem;color:rgba(255,243,224,.6);line-height:1.5}
+
+/* PROPOSAL CARDS */
+.propcard{background:var(--cbg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:.85rem}
+.propcard.win{background:#FFF8F0;border:2px solid var(--red)}
+.pbdg{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .65rem;border-radius:20px;display:inline-block;margin-bottom:.6rem}
+.pbdg.w{background:var(--red);color:var(--cream)}
+.pbdg.r{background:rgba(139,37,0,.1);color:var(--red)}
+.pnum2{font-size:.72rem;color:var(--lg);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem}
+.pnam{font-family:var(--fd);font-size:1.45rem;font-weight:700;color:var(--dark);margin-bottom:.15rem}
+.psc{font-family:var(--fd);font-size:2.8rem;font-weight:900;color:var(--red);line-height:1;margin:.5rem 0}
+.psc span{font-size:.95rem;font-weight:400;color:var(--lg);font-family:var(--fb)}
+.pdesc{font-size:.88rem;color:var(--gray);line-height:1.6;margin-bottom:.75rem}
+.ppils{display:flex;flex-wrap:wrap;gap:.35rem}
+.pill{font-size:.7rem;background:rgba(139,37,0,.07);color:var(--red);padding:.2rem .55rem;border-radius:20px;font-weight:500}
+
+/* STEPS */
+.steplist{margin-top:1.25rem;display:flex;flex-direction:column;gap:.65rem}
+.stepitem{background:rgba(255,255,255,.1);border-radius:12px;padding:.9rem 1rem;display:flex;gap:.75rem;align-items:flex-start}
+.stepnum{font-family:var(--fd);font-size:1.5rem;font-weight:900;color:var(--gold-l);line-height:1;min-width:32px;flex-shrink:0}
+.steptitle{font-size:.95rem;font-weight:600;color:var(--cream);margin-bottom:.2rem;line-height:1.3}
+.stepdesc{font-size:.82rem;color:rgba(255,243,224,.6);line-height:1.5}
+
+/* TAQ MENTIONS */
+.taqm{display:inline-block;background:rgba(193,127,0,.1);color:var(--mid);font-size:.78rem;font-weight:500;padding:.25rem .6rem;border-radius:20px;margin:.2rem;border:1px solid rgba(193,127,0,.25)}
+.taqh{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:700}
+
+/* FOOTER */
+footer{background:var(--dark);padding:2.5rem 1.25rem;text-align:center}
+.ft-brand{font-family:var(--fd);font-size:2rem;font-weight:900;color:var(--gold-l);display:block;margin-bottom:.5rem}
+.ft-tag{font-size:.88rem;font-weight:300;letter-spacing:.1em;color:rgba(255,243,224,.5);text-transform:uppercase;margin-bottom:1.5rem}
+.ft-rule{width:40px;height:2px;background:var(--red);margin:0 auto 1.5rem}
+.ft-meta{font-size:.78rem;color:rgba(255,243,224,.3);line-height:1.8}
+
+.deco{position:absolute;border-radius:50%;pointer-events:none}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.anim{opacity:0}
+.anim.vis{animation:fadeUp .5s ease forwards}
+.anim:nth-child(2){animation-delay:.08s}
+.anim:nth-child(3){animation-delay:.16s}
+.anim:nth-child(4){animation-delay:.24s}
+.anim:nth-child(5){animation-delay:.32s}
+
+@media(min-width:640px){
+  .slide{padding:4rem 2.5rem;margin:0 auto}
+  #cover{padding:4rem 2.5rem 5rem}
+  .sg{grid-template-columns:repeat(3,1fr)}
+  .re-grid{grid-template-columns:repeat(4,1fr)}
+  .il{display:grid;grid-template-columns:1fr 1fr}
+}
+@media(min-width:1024px){
+  .slide{padding:5rem 4rem;}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  .pc{margin-bottom:0}
+}
+</style>
+</head>
+<body>
+
+<div class="pb" id="progress"></div>
+<nav>
+  <a href="#cover" class="nav-brand">XIBALBA<span>Taquería · Research + Benchmark Fase 1</span></a>
+  <div class="nav-pg" id="navPg">01 / 15</div>
+</nav>
+
+<!-- S1: COVER -->
+<section id="cover" data-slide="1">
+  <div class="cv-tl"></div><div class="cv-br"></div>
+  <div class="cv-ey">Taquería 100% mexicana · Santiago, Chile</div>
+  <div class="cv-t">XIBALBA</div>
+  <div class="cv-st">El lugar donde el sabor es real</div>
+  <div class="cv-rule"></div>
+  <div class="cv-dt">Presentación Ejecutiva<br>Research Cuantitativo — Fase 1</div>
+  <div class="cv-mt">UXR Diseño · Cristian Pizarro Product Designer · Abril · Confidencial <br>Equipo Fundador + Diseño</div>
+  <span class="cv-bdg">n = 60 respuestas · 100% cobertura</span>
+</section>
+
+<!-- S2: RESUMEN EJECUTIVO -->
+<section class="slide" id="resumen" data-slide="2">
+  <div class="deco" style="width:220px;height:220px;background:rgba(139,37,0,.04);top:-60px;right:-60px;"></div>
+  <div class="slide-lbl anim">02 — Resumen ejecutivo</div>
+  <h2 class="stitle anim">Lo que necesitas saber<br>en 60 segundos</h2>
+
+  <div class="re-hero anim">
+    <div class="re-hero-label">El hallazgo central</div>
+    <div class="re-hero-text">"Nadie en Santiago tiene una identidad visual fuerte en el segmento taquería. Xibalba puede ser el primero — y los datos dicen exactamente cómo hacerlo."</div>
+  </div>
+
+  <div class="re-grid anim">
+    <div class="re-card">
+      <div class="re-card-num">60</div>
+      <div class="re-card-label">Personas encuestadas</div>
+      <div class="re-card-note">100% cobertura · Abril 2026</div>
+    </div>
+    <div class="re-card">
+      <div class="re-card-num">42%</div>
+      <div class="re-card-label">Juzga primero el diseño</div>
+      <div class="re-card-note">Antes que la comida o el precio</div>
+    </div>
+    <div class="re-card">
+      <div class="re-card-num">62%</div>
+      <div class="re-card-label">El diseño les da confianza para entrar</div>
+      <div class="re-card-note">Sin pagar necesariamente más</div>
+    </div>
+    <div class="re-card">
+      <div class="re-card-num">77%</div>
+      <div class="re-card-label">Confía en Cuidador + Sabio</div>
+      <div class="re-card-note">Los arquetipos de la marca</div>
+    </div>
+  </div>
+
+  <div class="anim">
+    <div class="re-finding">
+      <div class="re-finding-icon">🎯</div>
+      <div class="re-finding-text"><strong>El mercado potencial es enorme:</strong> 63% lleva más de 6 meses sin ir o nunca fue. Son la audiencia más conquistable con una primera buena impresión visual.</div>
+    </div>
+    <div class="re-finding">
+      <div class="re-finding-icon">🚫</div>
+      <div class="re-finding-text"><strong>Los clichés son el enemigo:</strong> El Chavo, Frida Kahlo, catrinas, Tex-Mex — rechazados activamente. El mercado quiere autenticidad profunda, no decoración superficial.</div>
+    </div>
+    <div class="re-finding">
+      <div class="re-finding-icon">🏆</div>
+      <div class="re-finding-text"><strong>No hay un líder visual:</strong> El Ranchero obtuvo solo 4 votos de 60. El espacio está libre para quien llegue primero con una identidad bien construida.</div>
+    </div>
+    <div class="re-finding">
+      <div class="re-finding-icon">🎨</div>
+      <div class="re-finding-text"><strong>"Colores" fue la palabra más repetida</strong> (19 veces) al describir la identidad ideal. La paleta de Xibalba no puede ser tímida ni genérica.</div>
+    </div>
+  </div>
+
+  <div class="re-mandate anim">
+    <div class="re-mandate-label">El mandato de diseño</div>
+    <div class="re-mandate-text">"Aquí saben lo que hacen. Se siente auténtico. Y se nota desde la puerta."</div>
+  </div>
+</section>
+
+<!-- S3: METODOLOGÍA -->
+<section class="slide slide-cream" id="metodologia" data-slide="3">
+  <div class="deco" style="width:200px;height:200px;background:rgba(139,37,0,.04);top:-60px;right:-60px;"></div>
+  <div class="slide-lbl anim">03 — Metodología</div>
+  <h2 class="stitle anim">Antes de diseñar,<br>fuimos al campo</h2>
+  <p class="sbody anim">Encuestamos a consumidores reales y al equipo fundador para que cada decisión de identidad visual esté anclada en evidencia, no en intuición.</p>
+  <div class="sg anim">
+    <div class="sc"><div class="sn">60</div><div class="sl">Respuestas válidas · SR #2<br>Potenciales clientes<br>21–22 Abril 2026</div></div>
+    <div class="sc"><div class="sn">2</div><div class="sl">Respuestas · SR #1<br>Creadores<br>Chef + Propietario</div></div>
+    <div class="sc"><div class="sn">10</div><div class="sl">Insights estratégicos con implicación directa en diseño y marketing</div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">¿Por qué hacer esto primero?</div>
+    <div class="qinsight-text">El 80% de los fracasos en branding gastronómico vienen de diseñar para el gusto del fundador, no para el cliente real. Este research invierte esa lógica: los datos hablan primero, el diseño responde después.</div>
+  </div>
+</section>
+
+<!-- S4: PERFILES -->
+<section class="slide" id="perfiles" data-slide="4">
+  <div class="slide-lbl anim">04 — Perfiles de cliente</div>
+  <h2 class="stitle anim">Dos perfiles confirmados<br>por data real</h2>
+  <div class="pgrid anim">
+    <div class="pc a">
+      <span class="ptag a">Perfil A — El Conocedor</span>
+      <div class="pname">Rodrigo, 34 años</div>
+      <div class="psub">Foodie activo · 37% de la muestra (n=22)</div>
+      <div class="pr"><span class="prl">Primer filtro</span><span class="prv">Reviews + ambiente + señales de autenticidad</span></div>
+      <div class="pr"><span class="prl">Lo convierte</span><span class="prv">Tortilla de maíz, trompo visible, receta de origen</span></div>
+      <div class="pr"><span class="prl">Pain points</span><span class="prv">El Chavo, Tex-Mex, Frida Kahlo cliché, calaveras</span></div>
+      <div class="pr"><span class="prl">WTP</span><span class="prv">No paga más, pero el diseño le da confianza para entrar</span></div>
+      <div class="parch"><strong>Arquetipo: Sabio</strong> — "El experto que conoce cada ingrediente" · 37% del total</div>
+      <div class="pq">"No necesito que se vea bonito. Necesito que se vea REAL."</div>
+    </div>
+    <div class="pc b">
+      <span class="ptag b">Perfil B — La Exploradora</span>
+      <div class="pname">Valentina, 26 años</div>
+      <div class="psub">Digital nativa · 63% de la muestra (n=38)</div>
+      <div class="pr"><span class="prl">Primer filtro</span><span class="prv">Diseño + limpieza visual + coherencia en Instagram</span></div>
+      <div class="pr"><span class="prl">La convierte</span><span class="prv">Fotos con luz cálida, ambiente shareable, recomendaciones</span></div>
+      <div class="pr"><span class="prl">Pain points</span><span class="prv">Sobresaturación, logos recargados, incoherencia visual</span></div>
+      <div class="pr"><span class="prl">WTP</span><span class="prv">Sí pagaría hasta 10% más por diseño coherente</span></div>
+      <div class="parch"><strong>Arquetipo: Cuidador</strong> — "El que te recibe como familia" · 40% del total</div>
+      <div class="pq">"Si no me da ganas de sacarlo en una foto, probablemente no vuelva."</div>
+    </div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión estratégica</div>
+    <div class="qinsight-text">Estos perfiles no se contradicen — se complementan. El Conocedor quiere señales de oficio real. La Exploradora quiere coherencia visual y redes atractivas. Una identidad bien construida puede hablarle a los dos con el mismo lenguaje visual: auténtico en contenido, moderno en ejecución.</div>
+  </div>
+</section>
+
+<!-- S5: FRECUENCIA + PRIMER JUICIO -->
+<section class="slide slide-cream" id="datos1" data-slide="5">
+  <div class="slide-lbl anim">05 — Frecuencia y primer juicio</div>
+  <h2 class="stitle anim">¿Quiénes son y qué<br>juzgan primero?</h2>
+
+  <div class="csec anim">
+    <div class="ctitle">P1 — ¿Con qué frecuencia vas a taquerías? (n=60)</div>
+    <div class="br"><div class="bh"><span class="bl">Hace mucho que no voy (6+ meses)</span><span class="bp">24 · 40%</span></div><div class="bt"><div class="bf" style="width:40%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Fui muy pocas veces / nunca</span><span class="bp">14 · 23%</span></div><div class="bt"><div class="bf" style="width:23%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">De vez en cuando (2-3 meses)</span><span class="bp">11 · 18%</span></div><div class="bt"><div class="bf g" style="width:18%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Regularmente (1+ vez al mes)</span><span class="bp">11 · 18%</span></div><div class="bt"><div class="bf g" style="width:18%"></div></div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P1 — La oportunidad del 63%</div>
+    <div class="qinsight-text">El 63% de la muestra no tiene el hábito activo de visitar taquerías. Esto no es un problema — es el mayor activo: hay un mercado enorme de personas que nunca han tenido una experiencia mexicana memorable en Santiago. Xibalba puede ser esa primera experiencia, y si es buena, no habrá punto de comparación.</div>
+  </div>
+
+  <div class="sdiv anim"><span>Primer juicio al entrar</span></div>
+
+  <div class="csec anim">
+    <div class="ctitle">P2 — ¿Qué juzgas primero al entrar a una taquería nueva? (n=60)</div>
+    <div class="br"><div class="bh"><span class="bl">Diseño / colores / limpieza</span><span class="bp">25 · 42%</span></div><div class="bt"><div class="bf" style="width:42%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Cómo se ve la comida</span><span class="bp">12 · 20%</span></div><div class="bt"><div class="bf" style="width:20%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El ambiente y la vibe</span><span class="bp">10 · 17%</span></div><div class="bt"><div class="bf" style="width:17%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El precio</span><span class="bp">7 · 12%</span></div><div class="bt"><div class="bf" style="width:12%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Reviews / recomendaciones</span><span class="bp">6 · 10%</span></div><div class="bt"><div class="bf" style="width:10%"></div></div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P2 — El diseño es el portero</div>
+    <div class="qinsight-text">El 42% juzga primero el diseño y la limpieza — antes que la comida, el precio o las reviews. Esto tiene una implicación directa: sin importar qué tan buena sea la comida, si el lugar no "pasa" el filtro visual en los primeros 3 segundos, el cliente no llega a probarla. Invertir en identidad visual es invertir en conversión.</div>
+  </div>
+</section>
+
+<!-- S6: WTP + ARQUETIPOS -->
+<section class="slide" id="datos2" data-slide="6">
+  <div class="slide-lbl anim">06 — Valor del diseño y confianza</div>
+  <h2 class="stitle anim">¿El diseño convierte?<br>¿A quién le creen?</h2>
+
+  <div class="csec anim">
+    <div class="ctitle">P3 — ¿Pagarías más por un diseño hermoso y coherente? (n=60)</div>
+    <div class="br"><div class="bh"><span class="bl">No, pero me da más confianza para entrar</span><span class="bp">37 · 62%</span></div><div class="bt"><div class="bf" style="width:62%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">No, solo importa la comida y el precio</span><span class="bp">9 · 15%</span></div><div class="bt"><div class="bf" style="width:15%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Sí, hasta 10% más</span><span class="bp">10 · 17%</span></div><div class="bt"><div class="bf g" style="width:17%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Sí, hasta 20% más</span><span class="bp">4 · 7%</span></div><div class="bt"><div class="bf g" style="width:7%"></div></div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P3 — ROI real del diseño</div>
+    <div class="qinsight-text">El diseño no justifica precio premium para la mayoría — pero el 85% le reconoce valor. El 62% lo usa como señal de confianza para dar el primer paso. Eso convierte en volumen de visitas, no en ticket. Más visitas × misma calidad = más reviews, más boca a boca, más retención. El 24% que sí paga más confirma que hay un segmento premium también capturável.</div>
+  </div>
+
+  <div class="sdiv anim"><span>Arquetipos de confianza</span></div>
+
+  <div class="csec anim">
+    <div class="ctitle">P4 — Si la taquería fuera una persona, ¿cuál generaría más confianza? (n=60)</div>
+    <div class="br"><div class="bh"><span class="bl">Cuidador — "como si fueras familia"</span><span class="bp">24 · 40%</span></div><div class="bt"><div class="bf" style="width:40%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Sabio — "conoce cada ingrediente y su origen"</span><span class="bp">22 · 37%</span></div><div class="bt"><div class="bf" style="width:37%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Creador — "reinventa la tradición"</span><span class="bp">6 · 10%</span></div><div class="bt"><div class="bf gn" style="width:10%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Rebelde / Héroe / Explorador</span><span class="bp">8 · 13%</span></div><div class="bt"><div class="bf gn" style="width:13%"></div></div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P4 — El ADN emocional de Xibalba</div>
+    <div class="qinsight-text">Cuidador + Sabio = 77%. Son complementarios: uno comunica calidez y acogida ("aquí te van a tratar bien"), el otro comunica expertise y conocimiento ("aquí saben lo que hacen"). Estos dos arquetipos juntos forman el ADN emocional completo de la marca y deben estar presentes en cada decisión de diseño, tono de voz y servicio.</div>
+  </div>
+</section>
+
+<!-- S7: DIFERENCIADOR + REFERENTES -->
+<section class="slide slide-cream" id="dif" data-slide="7">
+  <div class="slide-lbl anim">07 — Diferenciación visual</div>
+  <h2 class="stitle anim">¿Qué hace diferente<br>a una taquería?</h2>
+
+  <div class="csec anim">
+    <div class="ctitle">P5 — ¿Qué la hace visualmente diferente? (n=60)</div>
+    <div class="br"><div class="bh"><span class="bl">Decoración auténtica y coherente</span><span class="bp">26 · 43%</span></div><div class="bt"><div class="bf" style="width:43%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Ambiente moderno y limpio</span><span class="bp">20 · 33%</span></div><div class="bt"><div class="bf" style="width:33%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Colores únicos y memorables</span><span class="bp">8 · 13%</span></div><div class="bt"><div class="bf g" style="width:13%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Presencia fuerte en redes</span><span class="bp">4 · 7%</span></div><div class="bt"><div class="bf g" style="width:7%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Logo o marca clara</span><span class="bp">2 · 3%</span></div><div class="bt"><div class="bf g" style="width:3%"></div></div></div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P5 — La falsa contradicción</div>
+    <div class="qinsight-text">Decoración auténtica (43%) y ambiente moderno (33%) coexisten como los dos factores más votados. No son opuestos. Son la misma cosa bien ejecutada: una taquería puede tener elementos culturales auténticos presentados con limpieza y coherencia contemporánea. Eso es exactamente el brief de diseño de Xibalba.</div>
+  </div>
+
+  <div class="sdiv anim"><span>P6 — Referentes locales mencionados</span></div>
+
+  <div class="anim">
+    <div class="ctitle">¿Cuál taquería en Santiago tiene la mejor identidad visual?</div>
+    <div style="margin-top:.5rem;line-height:2">
+      <span class="taqm taqh">El Ranchero ×4</span>
+      <span class="taqm taqh">Mariachi Loco ×3</span>
+      <span class="taqm">El Socio ×2</span>
+      <span class="taqm">Ay Lupita</span>
+      <span class="taqm">Zócalo</span>
+      <span class="taqm">Expendio Montt</span>
+      <span class="taqm">Los Cuates</span>
+      <span class="taqm">Plaza Jalisco</span>
+      <span class="taqm">Tijuana Tacos</span>
+      <span class="taqm">Rincón Mexicano</span>
+      <span class="taqm">Mexicana Restoran</span>
+      <span class="taqm">Barrio Italia s/n</span>
+    </div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P6 — El vacío confirmado</div>
+    <div class="qinsight-text">El Ranchero lidera con apenas 4 votos de 60. No tiene brand equity real — la gente lo valora por "parecer México", no por tener una identidad de marca sofisticada. En el segmento taquería en Santiago, nadie ha ocupado ese espacio todavía. Xibalba puede ser el primero y establecer el estándar antes de que llegue la competencia.</div>
+  </div>
+</section>
+
+<!-- S8: PAIN POINTS -->
+<section class="slide slide-dark" id="pain" data-slide="8">
+  <div class="deco" style="width:250px;height:250px;background:rgba(139,37,0,.08);bottom:-80px;right:-80px;"></div>
+  <div class="slide-lbl anim">08 — Lo que el mercado rechaza</div>
+  <h2 class="stitle anim">Restricciones absolutas<br>de diseño</h2>
+
+  <div class="pl anim">
+    <div class="pi"><span class="pll">Sobresaturación / exceso de elementos</span><div class="pbw"><div class="pbf" style="width:100%"></div></div><span class="pcnt">8</span></div>
+    <div class="pi"><span class="pll">Tex-Mex / imitación de comida gringa</span><div class="pbw"><div class="pbf" style="width:75%"></div></div><span class="pcnt">6</span></div>
+    <div class="pi"><span class="pll">El Chavo del 8 / cultura pop reduccionista</span><div class="pbw"><div class="pbf" style="width:63%"></div></div><span class="pcnt">5</span></div>
+    <div class="pi"><span class="pll">Frida Kahlo / catrinas / cactus cliché</span><div class="pbw"><div class="pbf" style="width:50%"></div></div><span class="pcnt">4</span></div>
+    <div class="pi"><span class="pll">Caricaturas / logos recargados</span><div class="pbw"><div class="pbf" style="width:50%"></div></div><span class="pcnt">4</span></div>
+    <div class="pi"><span class="pll">Oscuro / sucio / mala iluminación</span><div class="pbw"><div class="pbf" style="width:38%"></div></div><span class="pcnt">3</span></div>
+    <div class="pi"><span class="pll">Muy serio / colores apagados / sin alma</span><div class="pbw"><div class="pbf" style="width:38%"></div></div><span class="pcnt">3</span></div>
+    <div class="pi"><span class="pll">Diseño genérico sin identidad (incl. IA)</span><div class="pbw"><div class="pbf" style="width:25%"></div></div><span class="pcnt">2</span></div>
+  </div>
+
+  <div class="vl anim">
+    <div class="vi">"Puras calaveras. México es más que eso."</div>
+    <div class="vi">"El chavo del 8 y mariachis — México es más que esoooo."</div>
+    <div class="vi">"Diseños generados por IA, últimamente todos se parecen."</div>
+    <div class="vi">"Los colores fuertes y que lo llenan de cara de Frida."</div>
+    <div class="vi">"La iluminación blanca hace que la comida se vea poco apetitosa y mata el ambiente acogedor."</div>
+  </div>
+
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión P7 — La gran paradoja del diseño mexicano</div>
+    <div class="qinsight-text">Los encuestados quieren colores vibrantes y decoración auténtica — pero rechazan los íconos más visibles de la cultura mexicana en el imaginario popular. Esto define con precisión el brief: hay que ser culturalmente rico sin ser visualmente predecible. Los glifos mayas del Popol Vuh son iconografía profunda y diferenciadora, a diferencia del Chavo o Frida que cualquier persona asocia a "estereotipo".</div>
+  </div>
+</section>
+
+<!-- S9: 10 INSIGHTS -->
+<section class="slide slide-dark" id="insights" data-slide="9">
+  <div class="slide-lbl anim">09 — Síntesis estratégica</div>
+  <h2 class="stitle anim">10 insights que guían<br>el diseño de Xibalba</h2>
+  <div class="il anim">
+    <div class="ii"><div class="in">01</div><div><div class="ititle">El vacío es la oportunidad</div><div class="idesc">El Ranchero: 4/60 menciones. No hay líder visual en Santiago. Xibalba puede ser el primero.</div></div></div>
+    <div class="ii"><div class="in">02</div><div><div class="ititle">Autenticidad ≠ Folclore</div><div class="idesc">8 rechazos a clichés, 6 a Tex-Mex. Autenticidad = trompo real, tortilla de maíz — no calaveras decorativas.</div></div></div>
+    <div class="ii"><div class="in">03</div><div><div class="ititle">Diseño reduce fricción</div><div class="idesc">62% no paga más pero SÍ entra. El ROI del diseño es en volumen de primeras visitas.</div></div></div>
+    <div class="ii"><div class="in">04</div><div><div class="ititle">Cuidador + Sabio = 77%</div><div class="idesc">Calidez y expertise son complementarios. La marca que cuida Y sabe es lo que el mercado quiere.</div></div></div>
+    <div class="ii"><div class="in">05</div><div><div class="ititle">El color es exigido</div><div class="idesc">"Colores" fue la palabra más repetida (19×) para describir la identidad ideal. La paleta no puede ser tímida.</div></div></div>
+    <div class="ii"><div class="in">06</div><div><div class="ititle">Auténtico + moderno coexisten</div><div class="idesc">Decoración auténtica (43%) y ambiente moderno (33%) como top-2. No se contradicen — se complementan.</div></div></div>
+    <div class="ii"><div class="in">07</div><div><div class="ititle">Iluminación = identidad</div><div class="idesc">"La luz blanca fría mata el ambiente." Luz cálida ámbar no es decoración — es parte del sistema visual.</div></div></div>
+    <div class="ii"><div class="in">08</div><div><div class="ititle">Xibalba: misterio, no miedo</div><div class="idesc">El nombre es poderoso pero ambiguo. El diseño debe reinterpretarlo como asombro profundo, no oscuridad.</div></div></div>
+    <div class="ii"><div class="in">09</div><div><div class="ititle">Vegetarianos invisibilizados</div><div class="idesc">"Soy vegetariana, pocas opciones." Carta plant-based visible en el diseño es oportunidad diferenciadora.</div></div></div>
+    <div class="ii"><div class="in">10</div><div><div class="ititle">Los diseños IA son el nuevo cliché</div><div class="idesc">"Todos se parecen." La identidad debe sentirse humanamente elaborada — trazo artesanal, imperfección controlada.</div></div></div>
+  </div>
+</section>
+
+<!-- S10: PROPUESTAS -->
+<section class="slide" id="propuestas" data-slide="10">
+  <div class="slide-lbl anim">10 — Propuestas de concepto visual</div>
+  <h2 class="stitle anim">3 Conceptos basados en<br>research, no en gustos</h2>
+  <p class="sbody anim">Cada propuesta ponderada contra los 10 insights. Ganadora según matriz de alineamiento estratégico.</p>
+  <div style="margin-top:1.25rem" class="anim">
+    <div class="propcard win">
+      <div class="pnum2">Propuesta 1</div>
+      <span class="pbdg w">★ Recomendada por research</span>
+      <div class="pnam">Xibalba Ancestral</div>
+      <div class="psc">8.9 <span>/ 10</span></div>
+      <div class="pdesc">Mitología maya como base visual. Glifos estilizados del Popol Vuh — no calaveras decorativas. Paleta terracota + dorado + crema sobre fondos oscuros cálidos. La más diferenciadora: nadie en Santiago lo ha hecho.</div>
+      <div class="ppils"><span class="pill">Rojo #8B2500</span><span class="pill">Dorado #C17F00</span><span class="pill">Crema #FFF3E0</span><span class="pill">Cinzel + Montserrat</span><span class="pill">Trazo artesanal</span></div>
+    </div>
+    <div class="propcard">
+      <div class="pnum2">Propuesta 2</div>
+      <span class="pbdg r">Runner-up</span>
+      <div class="pnam">Xibalba Contemporáneo</div>
+      <div class="psc">7.9 <span>/ 10</span></div>
+      <div class="pdesc">Estilo CDMX moderno. Fondo crema con acentos en rojo y dorado. Alta coherencia en Instagram. Máxima escalabilidad a multi-locales. Ideal si se prioriza el Perfil B.</div>
+      <div class="ppils"><span class="pill">Crema dominante</span><span class="pill">Rojo acento</span><span class="pill">Playfair + Montserrat</span></div>
+    </div>
+    <div class="propcard">
+      <div class="pnum2">Propuesta 3</div>
+      <span class="pbdg r">Alternativa</span>
+      <div class="pnam">Xibalba Mercado</div>
+      <div class="psc">7.5 <span>/ 10</span></div>
+      <div class="pdesc">Energía de mercado callejero oaxaqueño. Máximo impacto en redes. Requiere mayor producción para no caer en sobresaturación — el pain point #1 del mercado.</div>
+      <div class="ppils"><span class="pill">Naranja #E8621A</span><span class="pill">Amarillo + Verde</span><span class="pill">Bebas + Inter</span></div>
+    </div>
+  </div>
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión de selección</div>
+    <div class="qinsight-text">La Propuesta 1 es la única que resuelve los 4 desafíos simultáneamente: llena el vacío visual, evita los clichés rechazados, reinterpreta el nombre Xibalba y satisface la demanda de autenticidad profunda. Las otras dos son válidas, pero ninguna genera tanta diferenciación estructural en el mercado local.</div>
+  </div>
+</section>
+
+<!-- S11: BENCHMARK -->
+<section class="slide" id="benchmark" data-slide="11">
+  <div class="deco" style="width:240px;height:240px;background:rgba(139,37,0,.04);top:-60px;right:-60px;"></div>
+  <div class="slide-lbl anim">11 — Benchmark competitivo</div>
+  <h2 class="stitle anim">15 competidores mapeados.<br>Un espacio libre.</h2>
+  <p class="sbody anim">Análisis exhaustivo de la Región Metropolitana: desde taquerías de barrio hasta fast food y alta cocina mexicana.</p>
+
+  <div style="margin-top:1.25rem" class="anim">
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem">Segmento Premium / Gourmet</div>
+    <div style="display:grid;gap:.5rem;margin-bottom:1rem">
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Lolita Jones</div><div style="font-size:.78rem;color:var(--gray)">Fusión NY · Street food gourmet + coctelería de autor · Instagram 97K</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--red)">$22.500</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">El Ranchero</div><div style="font-size:.78rem;color:var(--gray)">30 años · "Preferido por mexicanos en Chile" · Vitacura · Lider de menciones visuales (4/60)</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--red)">$15.500</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Sánchez Tacos</div><div style="font-size:.78rem;color:var(--gray)">Nueva identidad · Barrio Italia · Taquería de autor · Diseño contemporáneo</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--red)">$16.500</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem">Segmento Tradicional / Familiar</div>
+    <div style="display:grid;gap:.5rem;margin-bottom:1rem">
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Ay Lupita</div><div style="font-size:.78rem;color:var(--gray)">★ 4.7 · 5.600+ reseñas · Líder Providencia · TikTok viral · Porciones generosas</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--gold)">$14.500</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Los Cuates</div><div style="font-size:.78rem;color:var(--gray)">★ 4.3 · 2.500+ reseñas · Más antiguo de Santiago · Tortillas de maíz propias</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--gold)">$14.900</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">El Zócalo</div><div style="font-size:.78rem;color:var(--gray)">★ 4.2 · 1.500+ reseñas · Menú extenso · "¿Hambre de algo auténtico?" · Web con pedidos</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--gold)">$11.990</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Mariachi Loco · Mexicana Restorán · La Taquería El Socio · Rosita · Plaza Jalisco</div><div style="font-size:.78rem;color:var(--gray)">Rango medio · Ambiente festivo / familiar · Precios $11.400–$18.900</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--gold)">×5</div><div style="font-size:.7rem;color:var(--lg)">actores</div></div>
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem">Segmento Económico / Street Food</div>
+    <div style="display:grid;gap:.5rem">
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Tijuana Tacos</div><div style="font-size:.78rem;color:var(--gray)">Estilo callejero · Barrio · Martes de tacos $1.000 · "Tesoro escondido" · Alta lealtad</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--green)">$7.500</div><div style="font-size:.7rem;color:var(--lg)">taco combo</div></div>
+      </div>
+      <div style="background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div><div style="font-weight:600;font-size:.9rem;color:var(--dark)">Taco Bell · Expendio Montt · Rincón Mexicano</div><div style="font-size:.78rem;color:var(--gray)">Conveniencia · Fast food Tex-Mex · Delivery-first · Precios $7.500–$9.500</div></div>
+        <div style="text-align:right"><div style="font-family:var(--fd);font-weight:900;font-size:1.1rem;color:var(--green)">×3</div><div style="font-size:.7rem;color:var(--lg)">actores</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qinsight anim" style="margin-top:1rem">
+    <div class="qinsight-label">Conclusión del benchmark</div>
+    <div class="qinsight-text">15 actores identificados, 4 segmentos claros. El mercado está saturado de opciones tradicionales-familiares, pero nadie ha construido una identidad de marca sólida y diferenciada en el segmento taquería auténtica con diseño sofisticado. Ese es el white space de Xibalba.</div>
+  </div>
+</section>
+
+<!-- S12: ANÁLISIS COMPETITIVO -->
+<section class="slide slide-dark" id="analisis" data-slide="12">
+  <div class="deco" style="width:280px;height:280px;background:rgba(193,127,0,.05);top:-80px;right:-80px;"></div>
+  <div class="slide-lbl anim">12 — Análisis competitivo</div>
+  <h2 class="stitle anim">Quién hace qué<br>y dónde está el vacío</h2>
+
+  <div class="il anim">
+    <div class="ii"><div class="in" style="color:var(--red);font-size:1.1rem;min-width:28px">🎯</div><div><div class="ititle">Marcas auténticas de barrio</div><div class="idesc">Tijuana Tacos, Los Cuates, El Ranchero, Rincón Mexicano. Sabor genuino, lealtad alta, pero identidad visual descuidada o ausente. Nadie construyó branding real.</div></div></div>
+    <div class="ii"><div class="in" style="color:var(--red);font-size:1.1rem;min-width:28px">✨</div><div><div class="ititle">Marcas experienciales de diseño</div><div class="idesc">Lolita Jones, Sánchez Tacos. Propuesta innovadora, estética cuidada. Lolita lidera en Instagram (97K). Precio premium. Orientadas a experiencia social más que a autenticidad culinaria.</div></div></div>
+    <div class="ii"><div class="in" style="color:var(--red);font-size:1.1rem;min-width:28px">🎉</div><div><div class="ititle">Marcas populares y familiares</div><div class="idesc">Ay Lupita (4.7★, 5.600 reseñas), El Zócalo, Mariachi Loco. Accesibles, festivas, buena relación calidad-precio. Ay Lupita lidera en engagement TikTok/Instagram por viralidad de porciones.</div></div></div>
+    <div class="ii"><div class="in" style="color:var(--red);font-size:1.1rem;min-width:28px">⚡</div><div><div class="ititle">Fast Food / Conveniencia</div><div class="idesc">Taco Bell, Expendio Montt. Modelo QSR, precios bajos, alta conveniencia. Sin expectativa de autenticidad. Taco Bell domina por consistencia y promociones.</div></div></div>
+  </div>
+
+  <div class="sdiv anim" style="margin:1.25rem 0"><span>Análisis de fortalezas digitales</span></div>
+
+  <div class="csec anim">
+    <div class="ctitle">Presencia digital por marca (indicador relativo)</div>
+    <div class="br"><div class="bh"><span class="bl">Ay Lupita — TikTok + Instagram · 5.600+ reseñas Google</span><span class="bp">★ 4.7</span></div><div class="bt"><div class="bf" style="width:95%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Lolita Jones — Instagram 97K · Coctelería viral</span><span class="bp">★ 4.4</span></div><div class="bt"><div class="bf" style="width:88%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Los Cuates — Google 2.500+ reseñas · Trayectoria</span><span class="bp">★ 4.3</span></div><div class="bt"><div class="bf g" style="width:75%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El Zócalo — Web con delivery · Google 1.500+ reseñas</span><span class="bp">★ 4.2</span></div><div class="bt"><div class="bf g" style="width:68%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El Ranchero — Instagram activo · 30 años reputación</span><span class="bp">★ 4.1</span></div><div class="bt"><div class="bf g" style="width:60%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Taco Bell — Global brand · app delivery · combos</span><span class="bp">★ 3.8</span></div><div class="bt"><div class="bf gn" style="width:50%"></div></div></div>
+  </div>
+
+  <div class="sdiv anim" style="margin:1.25rem 0"><span>Diferenciadores clave identificados</span></div>
+
+  <div class="anim" style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+    <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.4rem">Comunicación digital</div>
+      <div style="font-size:.84rem;color:rgba(255,243,224,.75);line-height:1.5">Instagram dominante. Ay Lupita y Lolita Jones lideran. Nadie ha construido una narrativa de marca coherente y profunda en todos los canales.</div>
+    </div>
+    <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.4rem">Identidad visual</div>
+      <div style="font-size:.84rem;color:rgba(255,243,224,.75);line-height:1.5">El Ranchero: 4 votos de 60 encuestados. Ninguna marca tiene brand equity visual real. La identidad es percibida como "genérica México".</div>
+    </div>
+    <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.4rem">Tono de comunicación</div>
+      <div style="font-size:.84rem;color:rgba(255,243,224,.75);line-height:1.5">Festivo + familiar (mayoría) vs. sofisticado (Lolita). Falta una voz que combine autenticidad cultural con expertise sin ser elitista.</div>
+    </div>
+    <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.4rem">Precio vs. valor</div>
+      <div style="font-size:.84rem;color:rgba(255,243,224,.75);line-height:1.5">Gap entre fast food ($7.500–9.500) y premium ($15.500–22.500). Zona $11.000–14.000 subocupada con identidad fuerte.</div>
+    </div>
+  </div>
+
+  <div class="qinsight anim" style="margin-top:1rem">
+    <div class="qinsight-label">Oportunidad estratégica confirmada</div>
+    <div class="qinsight-text">La coherencia entre propuesta de valor, identidad visual y tono de comunicación es escasa en todo el mercado. La reflexión central del benchmark confirma: hay un vacío para quien logre combinar autenticidad con una estética de marca moderna y bien definida. Ese es exactamente el brief de Xibalba.</div>
+  </div>
+</section>
+
+<!-- S13: MATRIZ DE POSICIONAMIENTO -->
+<section class="slide slide-cream" id="matriz" data-slide="13">
+  <div class="slide-lbl anim">13 — Matriz de posicionamiento</div>
+  <h2 class="stitle anim">El mapa del mercado.<br>El espacio de Xibalba.</h2>
+  <p class="sbody anim">Todos los actores mapeados en función de autenticidad y nivel de experiencia/precio. El cuadrante Premium Tradicional tiene capacidad para un nuevo jugador.</p>
+
+  <div class="anim" style="margin-top:1.25rem;background:var(--cbg);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+    <svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:'DM Sans',sans-serif">
+      <!-- Background -->
+      <rect width="600" height="460" fill="#FFFCF8"/>
+      <!-- Quadrant fills -->
+      <rect x="60" y="30" width="250" height="200" fill="rgba(139,37,0,0.03)" rx="4"/>
+      <rect x="310" y="30" width="250" height="200" fill="rgba(58,107,69,0.04)" rx="4"/>
+      <rect x="60" y="230" width="250" height="200" fill="rgba(193,127,0,0.03)" rx="4"/>
+      <rect x="310" y="230" width="250" height="200" fill="rgba(139,37,0,0.05)" rx="4"/>
+      <!-- Grid lines -->
+      <line x1="60" y1="230" x2="560" y2="230" stroke="rgba(139,37,0,0.15)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="310" y1="30" x2="310" y2="430" stroke="rgba(139,37,0,0.15)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Axes -->
+      <line x1="60" y1="430" x2="560" y2="430" stroke="#3D2E1E" stroke-width="2"/>
+      <line x1="60" y1="30" x2="60" y2="430" stroke="#3D2E1E" stroke-width="2"/>
+      <!-- Axis labels -->
+      <text x="310" y="456" text-anchor="middle" font-size="11" fill="#6B5B4E" font-weight="600">Autenticidad (Comercial → Tradicional)</text>
+      <text x="14" y="230" text-anchor="middle" font-size="11" fill="#6B5B4E" font-weight="600" transform="rotate(-90,14,230)">Experiencia / Precio (Económico → Premium)</text>
+      <!-- Quadrant labels -->
+      <text x="100" y="55" font-size="9" fill="rgba(139,37,0,0.4)" font-weight="700" letter-spacing="1">GOURMET / FUSIÓN</text>
+      <text x="380" y="55" font-size="9" fill="rgba(58,107,69,0.5)" font-weight="700" letter-spacing="1">PREMIUM TRADICIONAL</text>
+      <text x="75" y="420" font-size="9" fill="rgba(193,127,0,0.5)" font-weight="700" letter-spacing="1">FAST FOOD</text>
+      <text x="355" y="420" font-size="9" fill="rgba(139,37,0,0.4)" font-weight="700" letter-spacing="1">STREET FOOD AUTÉNTICO</text>
+      <!-- BRANDS as dots -->
+      <!-- Lolita Jones x=6,y=9 → svg: x=(6/10)*500+60=360, y=(1-9/10)*400+30=70 -->
+      <circle cx="360" cy="70" r="7" fill="#8B2500"/>
+      <text x="371" y="68" font-size="9" fill="#3D2E1E" font-weight="600">Lolita Jones</text>
+      <!-- El Ranchero x=9,y=8 → x=510,y=110 -->
+      <circle cx="510" cy="110" r="7" fill="#8B2500"/>
+      <text x="521" y="114" font-size="9" fill="#3D2E1E" font-weight="600">El Ranchero</text>
+      <!-- Sánchez Tacos x=7,y=8 → x=410,y=110 -->
+      <circle cx="410" cy="110" r="7" fill="#C17F00"/>
+      <text x="421" y="108" font-size="9" fill="#3D2E1E" font-weight="600">Sánchez Tacos</text>
+      <!-- Rosita x=4,y=7 → x=260,y=150 -->
+      <circle cx="260" cy="150" r="7" fill="#8B2500"/>
+      <text x="271" y="154" font-size="9" fill="#3D2E1E" font-weight="600">Rosita</text>
+      <!-- Los Cuates x=9,y=7 → x=510,y=150 -->
+      <circle cx="510" cy="150" r="7" fill="#3A6B45"/>
+      <text x="521" y="154" font-size="9" fill="#3D2E1E" font-weight="600">Los Cuates</text>
+      <!-- Mexicana Restoran x=8,y=7 → x=460,y=150 -->
+      <circle cx="460" cy="150" r="6" fill="#3A6B45"/>
+      <text x="400" y="145" font-size="9" fill="#3D2E1E" font-weight="600">Mexicana Restorán</text>
+      <!-- El Zócalo x=6,y=6 → x=360,y=190 -->
+      <circle cx="360" cy="190" r="7" fill="#C17F00"/>
+      <text x="371" y="194" font-size="9" fill="#3D2E1E" font-weight="600">El Zócalo</text>
+      <!-- Mariachi Loco x=8,y=6 → x=460,y=190 -->
+      <circle cx="460" cy="190" r="7" fill="#3A6B45"/>
+      <text x="471" y="194" font-size="9" fill="#3D2E1E" font-weight="600">Mariachi Loco</text>
+      <!-- Ay Lupita x=6,y=5 → x=360,y=230 -->
+      <circle cx="360" cy="230" r="7" fill="#8B2500"/>
+      <text x="318" y="245" font-size="9" fill="#3D2E1E" font-weight="600">Ay Lupita</text>
+      <!-- El Socio x=7,y=5 → x=410,y=230 -->
+      <circle cx="410" cy="230" r="7" fill="#C17F00"/>
+      <text x="421" y="245" font-size="9" fill="#3D2E1E" font-weight="600">El Socio</text>
+      <!-- Plaza Jalisco x=6,y=4 → x=360,y=270 -->
+      <circle cx="360" cy="270" r="6" fill="#3A6B45"/>
+      <text x="371" y="274" font-size="9" fill="#3D2E1E" font-weight="600">Plaza Jalisco</text>
+      <!-- Expendio Montt x=8,y=4 → x=460,y=270 -->
+      <circle cx="460" cy="270" r="6" fill="#E8621A"/>
+      <text x="471" y="274" font-size="9" fill="#3D2E1E" font-weight="600">Expendio Montt</text>
+      <!-- Rincón Mexicano x=9,y=4 → x=510,y=270 -->
+      <circle cx="510" cy="270" r="6" fill="#9B6B9B"/>
+      <text x="516" y="284" font-size="9" fill="#3D2E1E" font-weight="600">Rincón Mexicano</text>
+      <!-- Tijuana Tacos x=9,y=3 → x=510,y=310 -->
+      <circle cx="510" cy="310" r="7" fill="#3A6B45"/>
+      <text x="521" y="314" font-size="9" fill="#3D2E1E" font-weight="600">Tijuana Tacos</text>
+      <!-- Taco Bell x=2,y=2 → x=160,y=350 -->
+      <circle cx="160" cy="350" r="7" fill="#888"/>
+      <text x="171" y="354" font-size="9" fill="#3D2E1E" font-weight="600">Taco Bell</text>
+      <!-- XIBALBA target zone -->
+      <ellipse cx="455" cy="95" rx="55" ry="38" fill="none" stroke="#8B2500" stroke-width="2" stroke-dasharray="6,4"/>
+      <text x="404" y="88" font-size="10" fill="#8B2500" font-weight="700">XIBALBA →</text>
+    </svg>
+  </div>
+
+  <div class="qinsight anim" style="margin-top:.75rem">
+    <div class="qinsight-label">Posicionamiento objetivo de Xibalba</div>
+    <div class="qinsight-text">El cuadrante Premium Tradicional (alta autenticidad + precio medio-alto) tiene espacio real. El Ranchero está ahí con 30 años pero sin identidad visual de marca. Xibalba puede entrar con una propuesta idéntica en autenticidad culinaria pero radicalmente superior en branding, diseño y narrativa.</div>
+  </div>
+</section>
+
+<!-- S14: COMPARATIVA DE PRECIOS -->
+<section class="slide" id="precios" data-slide="14">
+  <div class="deco" style="width:200px;height:200px;background:rgba(139,37,0,.04);top:-50px;right:-50px;"></div>
+  <div class="slide-lbl anim">14 — Comparativa de precios</div>
+  <h2 class="stitle anim">El mercado en<br>números reales</h2>
+  <p class="sbody anim">Precio promedio por orden de tacos / combo en CLP. Datos 2026 · Plataformas delivery + menús oficiales.</p>
+
+  <div class="csec anim" style="margin-top:1.25rem">
+    <div class="ctitle" style="margin-bottom:.5rem">Premium / Gourmet</div>
+    <div class="br"><div class="bh"><span class="bl">Lolita Jones</span><span class="bp">$22.500</span></div><div class="bt"><div class="bf" style="width:100%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Rosita</span><span class="bp">$18.900</span></div><div class="bt"><div class="bf" style="width:84%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Sánchez Tacos</span><span class="bp">$16.500</span></div><div class="bt"><div class="bf" style="width:73%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El Ranchero</span><span class="bp">$15.500</span></div><div class="bt"><div class="bf" style="width:69%"></div></div></div>
+
+    <div class="ctitle" style="margin-top:1rem;margin-bottom:.5rem">Tradicional / Familiar</div>
+    <div class="br"><div class="bh"><span class="bl">Los Cuates</span><span class="bp">$14.900</span></div><div class="bt"><div class="bf g" style="width:66%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Ay Lupita</span><span class="bp">$14.500</span></div><div class="bt"><div class="bf g" style="width:64%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Mexicana Restorán</span><span class="bp">$13.900</span></div><div class="bt"><div class="bf g" style="width:62%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Mariachi Loco</span><span class="bp">$12.500</span></div><div class="bt"><div class="bf g" style="width:56%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El Zócalo</span><span class="bp">$11.990</span></div><div class="bt"><div class="bf g" style="width:53%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">El Socio</span><span class="bp">$11.400</span></div><div class="bt"><div class="bf g" style="width:51%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Rincón Mexicano</span><span class="bp">$10.500</span></div><div class="bt"><div class="bf g" style="width:47%"></div></div></div>
+
+    <div class="ctitle" style="margin-top:1rem;margin-bottom:.5rem">Económico / Street Food</div>
+    <div class="br"><div class="bh"><span class="bl">Plaza Jalisco</span><span class="bp">$9.900</span></div><div class="bt"><div class="bf gn" style="width:44%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Expendio Montt</span><span class="bp">$9.500</span></div><div class="bt"><div class="bf gn" style="width:42%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Taco Bell (combo)</span><span class="bp">$7.990</span></div><div class="bt"><div class="bf gn" style="width:36%"></div></div></div>
+    <div class="br"><div class="bh"><span class="bl">Tijuana Tacos</span><span class="bp">$7.500</span></div><div class="bt"><div class="bf gn" style="width:33%"></div></div></div>
+  </div>
+
+  <div style="background:var(--dark);border-radius:14px;padding:1rem 1.1rem;margin-top:1rem" class="anim">
+    <div style="font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,243,224,.5);margin-bottom:.4rem">Rango objetivo para Xibalba</div>
+    <div style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--cream);line-height:1.3">$12.000 – $16.000 CLP <span style="font-size:.85rem;font-weight:400;color:var(--gold)">por combo</span></div>
+    <div style="font-size:.82rem;color:rgba(255,243,224,.6);margin-top:.4rem;line-height:1.5">Posicionado entre Los Cuates y El Ranchero. Precio justificado por identidad visual + autenticidad + experiencia. No compite en precio con fast food ni aspira al lujo de Lolita Jones.</div>
+  </div>
+
+  <div class="qinsight anim">
+    <div class="qinsight-label">Reflexión de precios</div>
+    <div class="qinsight-text">El 17% de los encuestados pagaría hasta 10% más por diseño coherente, y otro 7% hasta 20% más. Con un precio base de $13.000, eso significa un potencial de ticket de $14.300–15.600 — perfectamente alineado con el rango medio-premium donde está el mayor volumen de competidores con peor identidad visual.</div>
+  </div>
+</section>
+
+<!-- S15: PRÓXIMOS PASOS -->
+<section class="slide slide-red" id="pasos" data-slide="15">
+  <div class="deco" style="width:300px;height:300px;background:rgba(255,255,255,.04);bottom:-100px;right:-100px;"></div>
+  <div class="slide-lbl anim">15 — Próximos pasos</div>
+  <h2 class="stitle anim">De la data al diseño</h2>
+  <div class="steplist anim">
+    <div class="stepitem"><div class="stepnum">01</div><div><div class="steptitle">Seleccionar propuesta ganadora</div><div class="stepdesc">Revisar las 3 propuestas con la matriz de evaluación del documento de lineamientos y elegir la dirección de diseño.</div></div></div>
+    <div class="stepitem"><div class="stepnum">02</div><div><div class="steptitle">Desarrollo de logo — 3 variaciones</div><div class="stepdesc">Positivo, negativo e isotipo. Revisión con equipo fundador. Archivos finales en AI, PDF, PNG y SVG.</div></div></div>
+    <div class="stepitem"><div class="stepnum">03</div><div><div class="steptitle">Carta menú física + digital</div><div class="stepdesc">Con sistema visual aplicado, opción plant-based visible, historia de receta por plato y naming alineado a la marca.</div></div></div>
+    <div class="stepitem"><div class="stepnum">04</div><div><div class="steptitle">Mockups de aplicación completa</div><div class="stepdesc">Instagram feed (9 posts), fachada, bolsa delivery, tarjeta de visita, señalética interior y uniforme.</div></div></div>
+    <div class="stepitem"><div class="stepnum">05</div><div><div class="steptitle">Estrategia de lanzamiento — 3 actos</div><div class="stepdesc">Misterio (2 semanas antes) → Revelación (apertura) → Comunidad (semanas 1-4). Plan de contenido 30 días.</div></div></div>
+    <div class="stepitem"><div class="stepnum">06</div><div><div class="steptitle">Métricas de éxito definidas</div><div class="stepdesc">500+ alcance post apertura · 10+ Google reviews 4★ · "auténtico" en 40%+ reviews · 30% retorno semana 2-4.</div></div></div>
+  </div>
+</section>
+
+<footer>
+  <span class="ft-brand">XIBALBA</span>
+  <div class="ft-tag">Taquería 100% mexicana · Santiago, Chile</div>
+  <div class="ft-rule"></div>
+  <div class="ft-meta">
+    Presentación Ejecutiva · Research Cuantitativo Fase 1<br>
+    n = 60 respuestas · SR #2 Potenciales Clientes + SR #1 Creadores<br>
+    Cristian Pizarro Senior Product Designer · Abril 2026 · Confidencial
+  </div>
+</footer>
+
+<script>
+const progress=document.getElementById('progress');
+const navPg=document.getElementById('navPg');
+const slides=document.querySelectorAll('[data-slide]');
+window.addEventListener('scroll',()=>{
+  const scrolled=window.scrollY;
+  const maxScroll=document.documentElement.scrollHeight-window.innerHeight;
+  progress.style.width=(scrolled/maxScroll*100)+'%';
+  let cur=1;
+  slides.forEach(s=>{if(s.getBoundingClientRect().top<=80)cur=parseInt(s.dataset.slide);});
+  navPg.textContent=String(cur).padStart(2,'0')+' / 15';
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.1,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
