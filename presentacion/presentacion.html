@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xibalbá · Tres Propuestas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --black:#0E0805;--dark:#1A1009;
+  --gold:#C8A24A;--gold-l:#E8C475;
+  --red:#A52319;--red-d:#7A1A14;
+  --cream:#F5E5C8;--cream-d:#D9BD96;
+  --kraft:#C8A878;
+  --green:#5C7547;
+  --gray:#8B7B6E;--lg:#A89A8E;
+  --border:rgba(200,162,74,0.2);
+}
+html,body{height:100%}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--black);color:var(--cream);
+  line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased
+}
+
+/* ===== STICKY NAV WITH SKIP ===== */
+.top-nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(14,8,5,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(200,162,74,.2);
+  padding:.85rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem
+}
+.top-brand{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-l);font-weight:700;letter-spacing:.15em;display:flex;flex-direction:column;line-height:1;flex-shrink:0}
+.top-brand span{font-family:'DM Sans',sans-serif;font-size:.55rem;font-weight:300;letter-spacing:.25em;color:rgba(245,229,200,.45);text-transform:uppercase;margin-top:5px}
+.nav-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.nav-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold-l);background:transparent;
+  border:1px solid var(--gold);
+  padding:.55rem 1rem;cursor:pointer;
+  text-decoration:none;
+  transition:all .25s;
+  white-space:nowrap
+}
+.nav-btn:hover{background:var(--gold);color:var(--black)}
+.nav-btn.primary{background:var(--gold);color:var(--black)}
+.nav-btn.primary:hover{background:var(--gold-l);color:var(--black);border-color:var(--gold-l)}
+.nav-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:580px){
+  .nav-btn{padding:.5rem .7rem;gap:.35rem;font-size:.62rem;letter-spacing:.12em}
+}
+@media(max-width:380px){
+  .top-brand span{display:none}
+  .nav-btn{padding:.45rem .55rem;font-size:.58rem;letter-spacing:.08em}
+  .cover-section .maya-corner{display:none}
+  .research-section .maya-corner{display:none}
+}
+
+/* ===== RESEARCH SECTIONS ===== */
+.research-section{
+  min-height:100svh;
+  padding:4rem 1.5rem 5rem;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(200,162,74,.1)
+}
+.section-wrap{max-width:960px;margin:0 auto;width:100%;position:relative;z-index:2}
+
+/* Decorative corners */
+.maya-corner{position:absolute;width:50px;height:50px;pointer-events:none;z-index:1}
+.maya-corner.tl{top:1.5rem;left:1rem;border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
+.maya-corner.tr{top:1.5rem;right:1rem;border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
+.maya-corner.bl{bottom:2rem;left:1rem;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
+.maya-corner.br{bottom:2rem;right:1rem;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
+
+.r-bg-1{background:radial-gradient(ellipse at 30% 20%, rgba(200,162,74,.08), transparent 60%),radial-gradient(ellipse at 80% 80%, rgba(165,35,25,.10), transparent 60%),var(--black)}
+.r-bg-2{background:var(--dark)}
+.r-bg-3{background:radial-gradient(ellipse at 70% 30%, rgba(200,162,74,.06), transparent 60%),var(--black)}
+
+/* COVER SLIDE — Title + Author */
+.cover-section{
+  min-height:100svh;
+  padding:5rem 1.25rem 4.5rem;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(200,162,74,.12), transparent 60%),
+    radial-gradient(ellipse at 50% 90%, rgba(165,35,25,.10), transparent 60%),
+    var(--black);
+  border-bottom:1px solid rgba(200,162,74,.1)
+}
+.cover-eyebrow{font-size:.65rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.cover-rule{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin:1rem auto;width:100px;height:8px
+}
+.cover-rule::before,.cover-rule::after{
+  content:'';flex:1;height:1px;background:var(--gold);opacity:.6
+}
+.cover-rule span{
+  width:6px;height:6px;background:var(--gold);
+  transform:rotate(45deg);flex-shrink:0;display:block
+}
+.cover-title{
+  font-family:'Cinzel',serif;font-weight:900;
+  font-size:clamp(3rem,13vw,6.5rem);
+  line-height:.95;color:var(--cream);
+  letter-spacing:.04em;margin-bottom:.4rem;
+  text-shadow:0 0 40px rgba(200,162,74,.15)
+}
+.cover-subtitle{
+  font-size:clamp(.78rem,2.2vw,.95rem);font-weight:400;
+  letter-spacing:.28em;color:var(--gold-l);
+  text-transform:uppercase;margin-bottom:1.25rem
+}
+.cover-deck-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.95rem,2.4vw,1.15rem);
+  font-weight:500;color:var(--cream);
+  letter-spacing:.05em;line-height:1.4;
+  margin-bottom:.4rem;font-style:italic
+}
+.cover-deck-sub{
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(245,229,200,.5);margin-bottom:1.5rem
+}
+
+/* AUTHOR BLOCK */
+.author-block{
+  margin:1.25rem auto 0;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(200,162,74,.25);
+  max-width:380px;width:100%
+}
+.author-label{
+  font-size:.6rem;font-weight:600;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.45rem
+}
+.author-name{
+  font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;
+  color:var(--cream);letter-spacing:.04em;line-height:1.2;
+  margin-bottom:.25rem
+}
+.author-role{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold-l);font-weight:500
+}
+.author-meta{
+  font-size:.65rem;color:rgba(245,229,200,.4);
+  letter-spacing:.05em;margin-top:.7rem;line-height:1.6
+}
+
+/* Maya corners on cover */
+.cover-section .maya-corner{position:absolute;width:42px;height:42px;pointer-events:none;z-index:1}
+.cover-section .maya-corner.tl{top:5rem;left:1rem;border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
+.cover-section .maya-corner.tr{top:5rem;right:1rem;border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
+.cover-section .maya-corner.bl{bottom:4.5rem;left:1rem;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
+.cover-section .maya-corner.br{bottom:4.5rem;right:1rem;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
+.cover-section .maya-corner::before{content:'';position:absolute;width:5px;height:5px;background:var(--red);border:1px solid var(--gold)}
+.cover-section .maya-corner.tl::before{top:-3px;left:-3px}
+.cover-section .maya-corner.tr::before{top:-3px;right:-3px}
+.cover-section .maya-corner.bl::before{bottom:-3px;left:-3px}
+.cover-section .maya-corner.br::before{bottom:-3px;right:-3px}
+
+.cover-content{position:relative;z-index:2;max-width:720px;width:100%;margin:0 auto;text-align:center}
+
+/* Cover scroll hint — pinned to bottom */
+.cover-section .scroll-hint{bottom:1.5rem}
+
+@media(min-width:640px){
+  .cover-section{padding:6rem 2.5rem 6rem}
+  .cover-eyebrow{font-size:.7rem;margin-bottom:1.5rem}
+  .cover-rule{margin:1.5rem auto}
+  .cover-deck-sub{margin-bottom:2.5rem}
+  .author-block{margin:2rem auto 0;padding-top:1.75rem}
+  .author-name{font-size:1.4rem}
+  .cover-section .maya-corner{width:60px;height:60px;top:1.5rem;bottom:2rem}
+}
+
+.r-label{font-size:.7rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:.85rem}
+.r-label::before{content:'';display:inline-block;width:32px;height:1px;background:var(--gold)}
+
+.r-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(2rem,6.5vw,3.4rem);line-height:1.1;color:var(--cream);margin-bottom:1.25rem;letter-spacing:-.01em}
+.r-title .accent{color:var(--gold-l);font-style:italic}
+
+.r-body{font-size:clamp(1rem,2.3vw,1.12rem);line-height:1.7;color:rgba(245,229,200,.78);max-width:680px;margin-bottom:1.5rem}
+.r-body strong{color:var(--gold-l);font-weight:600}
+
+/* HERO BLOCK */
+.r-hero{
+  background:rgba(200,162,74,.05);
+  border-left:3px solid var(--gold);
+  padding:1.25rem 1.5rem;margin:1.5rem 0;
+  border-radius:0 6px 6px 0
+}
+.r-hero-label{font-size:.62rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.r-hero-text{font-family:'Cinzel',serif;font-size:clamp(1.1rem,3vw,1.35rem);font-weight:700;color:var(--cream);line-height:1.4}
+
+/* INLINE CTA — link to full research */
+.r-cta-inline{
+  display:inline-flex;align-items:center;gap:.65rem;
+  font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold-l);background:transparent;
+  border:1px solid var(--gold);
+  padding:.85rem 1.25rem;cursor:pointer;
+  text-decoration:none;
+  transition:all .25s;margin-top:1.25rem
+}
+.r-cta-inline:hover{background:var(--gold);color:var(--black);transform:translateX(3px)}
+.r-cta-inline svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
+.r-cta-meta{font-size:.72rem;color:rgba(245,229,200,.5);margin-top:.6rem;letter-spacing:.05em}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin-top:1.5rem}
+.stat-card{
+  background:rgba(200,162,74,.06);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  border-radius:6px;padding:1rem 1.1rem
+}
+.stat-num{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5.5vw,2.4rem);font-weight:900;color:var(--gold-l);line-height:1;margin-bottom:.35rem}
+.stat-label{font-size:.85rem;color:var(--cream);font-weight:600;line-height:1.35;margin-bottom:.2rem}
+.stat-note{font-size:.72rem;color:rgba(245,229,200,.5);line-height:1.4;font-style:italic}
+
+/* PROFILE CARDS */
+.profile-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.25rem}
+.profile-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:1.25rem
+}
+.profile-card.a{border-left:3px solid var(--red)}
+.profile-card.b{border-left:3px solid var(--green)}
+.ptag{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.3rem .7rem;border-radius:30px;display:inline-block;margin-bottom:.6rem}
+.ptag.a{background:var(--red);color:var(--cream)}
+.ptag.b{background:var(--green);color:#fff}
+.pname{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;color:var(--cream);margin-bottom:.2rem;letter-spacing:.01em}
+.psub{font-size:.78rem;color:rgba(245,229,200,.55);margin-bottom:.85rem}
+.prow{display:flex;gap:.5rem;margin-bottom:.4rem;font-size:.82rem;line-height:1.4}
+.prl{font-weight:600;color:var(--gold-l);min-width:80px;flex-shrink:0;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}
+.prv{color:rgba(245,229,200,.78)}
+.pq{margin-top:.85rem;font-style:italic;font-size:.82rem;color:rgba(245,229,200,.7);border-left:2px solid var(--gold);padding-left:.85rem;line-height:1.5}
+
+/* FINDINGS LIST */
+.findings{margin-top:1.5rem;display:grid;grid-template-columns:1fr;gap:.7rem}
+.finding{
+  background:rgba(200,162,74,.05);border:1px solid var(--border);
+  border-radius:6px;padding:.95rem 1.1rem;
+  display:flex;gap:.85rem;align-items:flex-start
+}
+.finding-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.finding-text{font-size:.88rem;color:rgba(245,229,200,.8);line-height:1.55}
+.finding-text strong{color:var(--gold-l);font-weight:600}
+
+/* MANDATE BOX */
+.mandate{
+  background:linear-gradient(135deg, var(--red) 0%, var(--red-d) 100%);
+  border:1px solid var(--gold);
+  border-radius:6px;padding:1.5rem;margin-top:1.5rem;position:relative
+}
+.mandate::before{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid rgba(200,162,74,.3);border-radius:4px;pointer-events:none}
+.mandate-label{font-size:.62rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.5rem;position:relative}
+.mandate-text{font-family:'Cinzel',serif;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:700;color:var(--cream);line-height:1.45;position:relative}
+
+/* SCROLL HINT */
+.scroll-hint{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(245,229,200,.4);text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  animation:hintBounce 2.5s ease-in-out infinite
+}
+.scroll-hint svg{width:14px;height:14px;fill:currentColor}
+@keyframes hintBounce{
+  0%,100%{transform:translateX(-50%) translateY(0);opacity:.5}
+  50%{transform:translateX(-50%) translateY(6px);opacity:1}
+}
+
+/* ===== TRANSITION SECTION ===== */
+.transition-band{
+  background:linear-gradient(180deg, var(--black) 0%, var(--dark) 50%, var(--black) 100%);
+  padding:5rem 1.5rem 4rem;text-align:center;
+  border-top:1px solid rgba(200,162,74,.2);
+  border-bottom:1px solid rgba(200,162,74,.2)
+}
+.t-rule{display:flex;align-items:center;justify-content:center;gap:.6rem;margin:1.5rem auto;max-width:200px}
+.t-rule::before,.t-rule::after{content:'';flex:1;height:1px;background:var(--gold);opacity:.5}
+.t-rule span{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+
+/* ===== PROPOSALS GRID ===== */
+.proposals{padding:2rem 1.5rem 5rem;display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:1200px;margin:0 auto}
+
+.prop-card{
+  display:block;text-decoration:none;
+  border:1px solid rgba(200,162,74,.25);
+  background:rgba(200,162,74,.04);
+  padding:2rem 1.5rem;
+  transition:all .3s ease;
+  position:relative;overflow:hidden
+}
+.prop-card:hover{border-color:var(--gold);background:rgba(200,162,74,.08);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.prop-card.p1{border-left:4px solid var(--gold)}
+.prop-card.p2{border-left:4px solid var(--red)}
+.prop-card.p3{border-left:4px solid var(--kraft)}
+.prop-num{font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;line-height:1;margin-bottom:.5rem;letter-spacing:.05em}
+.prop-card.p1 .prop-num{color:var(--gold-l)}
+.prop-card.p2 .prop-num{color:var(--red)}
+.prop-card.p3 .prop-num{color:var(--kraft)}
+.prop-name{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;color:var(--cream);margin-bottom:.5rem;letter-spacing:.02em}
+.prop-tag{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.prop-desc{font-size:.88rem;color:rgba(245,229,200,.65);line-height:1.65;margin-bottom:1.25rem}
+.prop-quote{font-style:italic;font-size:.83rem;color:rgba(245,229,200,.5);border-left:2px solid var(--gold);padding-left:.85rem;margin-bottom:1.5rem;line-height:1.5}
+.prop-cta{display:inline-flex;align-items:center;gap:.6rem;font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);border:1px solid var(--gold);padding:.7rem 1.25rem;transition:all .25s}
+.prop-card:hover .prop-cta{background:var(--gold);color:var(--black)}
+.prop-cta svg{width:14px;height:14px;fill:currentColor}
+
+.footer{padding:2rem 1.5rem 3rem;text-align:center;border-top:1px solid rgba(200,162,74,.15);font-size:.75rem;color:rgba(245,229,200,.4);letter-spacing:.1em;line-height:1.7}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(min-width:640px){
+  .stat-grid{grid-template-columns:repeat(4,1fr)}
+  .profile-grid{grid-template-columns:1fr 1fr}
+  .findings{grid-template-columns:1fr 1fr}
+  .research-section{padding:6rem 2.5rem 6rem}
+}
+@media(min-width:720px){
+  .proposals{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:1024px){
+  .research-section{padding:7rem 4rem 7rem}
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV WITH SKIP -->
+<nav class="top-nav">
+  <div class="top-brand">XIBALBÁ<span>Brand Strategy · 2026</span></div>
+  <div class="nav-actions">
+    <a href="https://viborasnake.github.io/UXR-Xilbaba/" target="_blank" rel="noopener" class="nav-btn" aria-label="Ver research completo (abre en pestaña nueva)">
+      <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+      Research
+    </a>
+    <a href="#propuestas" class="nav-btn primary">
+      Propuestas
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ====== COVER SLIDE — Título + Autor ====== -->
+<section class="cover-section">
+  <div class="maya-corner tl"></div>
+  <div class="maya-corner tr"></div>
+  <div class="maya-corner bl"></div>
+  <div class="maya-corner br"></div>
+  <div class="cover-content">
+    <div class="cover-eyebrow reveal">Taquería 100% mexicana · Santiago</div>
+    <h1 class="cover-title reveal">XIBALBÁ</h1>
+    <div class="cover-subtitle reveal">Brand Strategy · 2026</div>
+    <div class="cover-rule reveal"><span></span></div>
+    <div class="cover-deck-title reveal">Presentación Ejecutiva</div>
+    <div class="cover-deck-sub reveal">Tres propuestas de identidad visual</div>
+    <div class="author-block reveal">
+      <div class="author-label">Diseño y dirección</div>
+      <div class="author-name">Cristian Pizarro</div>
+      <div class="author-role">Senior Product Designer</div>
+      <div class="author-meta">Research n=60 · Abril 2026<br>Confidencial — Equipo fundador Xibalbá</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    Comienza
+    <svg viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+  </div>
+</section>
+
+<!-- ====== RESEARCH SLIDE 1 — RESUMEN EJECUTIVO ====== -->
+<section class="research-section r-bg-1">
+  <div class="maya-corner tl"></div>
+  <div class="maya-corner tr"></div>
+  <div class="section-wrap">
+    <div class="r-label reveal">Research Fase 1 · Resumen ejecutivo</div>
+    <h2 class="r-title reveal">Antes de diseñar,<br>fuimos al <span class="accent">campo.</span></h2>
+    <p class="r-body reveal">El research cuantitativo de abril 2026 confirmó lo que la intuición sospechaba: <strong>nadie en Santiago tiene una identidad visual fuerte en el segmento taquería</strong>. Los datos indican exactamente cómo ocupar ese vacío.</p>
+    <div class="r-hero reveal">
+      <div class="r-hero-label">El hallazgo central</div>
+      <div class="r-hero-text">"Xibalbá puede ser el primero en construir una identidad de marca real en el segmento — y los datos dicen exactamente cómo hacerlo."</div>
+    </div>
+    <div class="stat-grid reveal">
+      <div class="stat-card">
+        <div class="stat-num">60</div>
+        <div class="stat-label">Encuestados</div>
+        <div class="stat-note">+ 2 entrevistas a creadores</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">42%</div>
+        <div class="stat-label">Juzga el diseño primero</div>
+        <div class="stat-note">Antes que comida o precio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">62%</div>
+        <div class="stat-label">El diseño da confianza</div>
+        <div class="stat-note">Para entrar al local</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">63%</div>
+        <div class="stat-label">Sin hábito activo</div>
+        <div class="stat-note">Audiencia conquistable</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <a href="https://viborasnake.github.io/UXR-Xilbaba/" target="_blank" rel="noopener" class="r-cta-inline">
+        Ver research completo
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+      </a>
+      <div class="r-cta-meta">Reporte UXR interactivo · 16 secciones · Abril 2026</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    Continúa
+    <svg viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+  </div>
+</section>
+
+<!-- ====== RESEARCH SLIDE 2 — PERFILES ====== -->
+<section class="research-section r-bg-2">
+  <div class="section-wrap">
+    <div class="r-label reveal">Perfiles de cliente · Confirmados por data</div>
+    <h2 class="r-title reveal">Dos audiencias,<br>una <span class="accent">misma promesa.</span></h2>
+    <p class="r-body reveal">Los perfiles no se contradicen — se complementan. <strong>El Conocedor</strong> quiere señales de oficio real. <strong>La Exploradora</strong> quiere coherencia visual y redes atractivas. Una identidad bien construida puede hablarles a los dos con el mismo lenguaje: auténtico en contenido, moderno en ejecución.</p>
+    <div class="profile-grid reveal">
+      <div class="profile-card a">
+        <span class="ptag a">Perfil A · 37%</span>
+        <div class="pname">El Conocedor</div>
+        <div class="psub">28–40 años · Foodie activo · Arquetipo Sabio</div>
+        <div class="prow"><div class="prl">Filtro</div><div class="prv">Reviews + ambiente + señales de autenticidad</div></div>
+        <div class="prow"><div class="prl">Convierte</div><div class="prv">Tortilla de maíz, trompo visible, receta de origen</div></div>
+        <div class="prow"><div class="prl">Rechaza</div><div class="prv">El Chavo, Tex-Mex, Frida cliché, calaveras</div></div>
+        <div class="pq">"No necesito que se vea bonito. Necesito que se vea REAL."</div>
+      </div>
+      <div class="profile-card b">
+        <span class="ptag b">Perfil B · 63%</span>
+        <div class="pname">La Exploradora</div>
+        <div class="psub">22–32 años · Digital nativa · Arquetipo Cuidador</div>
+        <div class="prow"><div class="prl">Filtro</div><div class="prv">Diseño + limpieza visual + coherencia en Instagram</div></div>
+        <div class="prow"><div class="prl">Convierte</div><div class="prv">Luz cálida, ambiente shareable, recomendaciones</div></div>
+        <div class="prow"><div class="prl">Rechaza</div><div class="prv">Sobresaturación, logos recargados, incoherencia</div></div>
+        <div class="pq">"Si no me da ganas de sacarlo en una foto, probablemente no vuelva."</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    Continúa
+    <svg viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+  </div>
+</section>
+
+<!-- ====== RESEARCH SLIDE 3 — HALLAZGOS + MANDATO ====== -->
+<section class="research-section r-bg-3">
+  <div class="maya-corner bl"></div>
+  <div class="maya-corner br"></div>
+  <div class="section-wrap">
+    <div class="r-label reveal">Hallazgos clave · El mandato de diseño</div>
+    <h2 class="r-title reveal">Lo que la <span class="accent">data exige.</span></h2>
+    <p class="r-body reveal">Seis patrones claros emergieron del análisis. Cada uno se traduce directamente en una decisión de diseño — no son recomendaciones, son requerimientos.</p>
+    <div class="findings reveal">
+      <div class="finding">
+        <div class="finding-icon">🎨</div>
+        <div class="finding-text"><strong>"Colores" fue la palabra más repetida</strong> (19 veces). La paleta no puede ser tímida ni genérica.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon">⚖️</div>
+        <div class="finding-text"><strong>Cuidador + Sabio = 77%</strong>. Calidez + expertise: el ADN emocional de la marca.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon">🚫</div>
+        <div class="finding-text"><strong>Los clichés son el enemigo:</strong> El Chavo, Frida, catrinas, Tex-Mex — rechazados activamente.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon">✨</div>
+        <div class="finding-text"><strong>Auténtico + moderno coexisten</strong> (43% + 33%). Decoración cultural con limpieza contemporánea.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon">🏆</div>
+        <div class="finding-text"><strong>No hay líder visual:</strong> El Ranchero obtuvo 4 votos de 60. El espacio premium tradicional está libre.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon">🤖</div>
+        <div class="finding-text"><strong>Los diseños IA son el nuevo cliché:</strong> "Todos se parecen". La identidad debe sentirse humanamente elaborada.</div>
+      </div>
+    </div>
+    <div class="mandate reveal">
+      <div class="mandate-label">El mandato de diseño</div>
+      <div class="mandate-text">"Aquí saben lo que hacen. Se siente auténtico. Y se nota desde la puerta."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TRANSITION TO PROPOSALS ====== -->
+<section id="propuestas" class="transition-band">
+  <div class="r-label reveal" style="justify-content:center">De research a diseño · Tres caminos</div>
+  <h2 class="r-title reveal" style="text-align:center">Tres propuestas,<br>un mismo <span class="accent">research.</span></h2>
+  <div class="t-rule reveal"><span></span></div>
+  <p class="r-body reveal" style="margin:0 auto;text-align:center">Cada propuesta resuelve la promesa con voz, materialidad y tono distintos. Selecciona una para explorar la presentación ejecutiva completa.</p>
+</section>
+
+<!-- ====== PROPOSALS GRID ====== -->
+<div class="proposals">
+
+  <a class="prop-card p1 reveal" href="xibalba_prop_01.html">
+    <div class="prop-num">01</div>
+    <div class="prop-tag">Ceremonial · Premium</div>
+    <h2 class="prop-name">Inframundo Maya</h2>
+    <p class="prop-desc">Logo figurativo del guardián con cuenco humeante. Negro profundo + dorado ritual + kraft. Materialidad &gt; decoración. Una taquería que se siente como un templo.</p>
+    <div class="prop-quote">"No es muerte, es tránsito. No es final, es origen."</div>
+    <div class="prop-cta">Ver presentación
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+  </a>
+
+  <a class="prop-card p2 reveal" href="xibalba_prop_02.html">
+    <div class="prop-num">02</div>
+    <div class="prop-tag">Cálido · Festivo</div>
+    <h2 class="prop-name">Taquería del Barrio</h2>
+    <p class="prop-desc">Jaguar guardián como emblema. Rojo barro + naranja quemado + verde tierra. Tono cantina mexicana auténtica con detalles cuidados. Cocinamos historias.</p>
+    <div class="prop-quote">"Cocinamos historias, servimos tradición."</div>
+    <div class="prop-cta">Ver presentación
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+  </a>
+
+  <a class="prop-card p3 reveal" href="xibalba_prop_03.html">
+    <div class="prop-num">03</div>
+    <div class="prop-tag">Geométrico · Contemporáneo</div>
+    <h2 class="prop-name">Glifo · Transformación</h2>
+    <p class="prop-desc">Glifo maya geométrico inspirado en máscaras rituales. Negro + kraft + terracota suave. Mínimo ruido, máximo símbolo. Escalable a cualquier formato.</p>
+    <div class="prop-quote">"No es final. Es transformación."</div>
+    <div class="prop-cta">Ver presentación
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  Presentaciones ejecutivas · Xibalbá Brand Strategy 2026<br>
+  Diseño y dirección · <strong style="color:rgba(245,229,200,.7)">Cristian Pizarro · Senior Product Designer</strong><br>
+  Research n=60 · Abril 2026 · Confidencial
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('a[href="#propuestas"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('propuestas').scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+});
+</script>
+
+</body>
+</html>

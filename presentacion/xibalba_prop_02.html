@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Xibalbá · Propuesta 02 — Taquería del Barrio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Alfa+Slab+One&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  /* Prop 02 — Taquería del Barrio · Jaguar */
+  --red:#A52319;--red-d:#7A1A14;--red-l:#C8362A;
+  --orange:#D25D1E;--orange-l:#E8763A;
+  --green:#3C6E37;--green-d:#2A5128;
+  --black:#1A1009;--ink:#1F1813;
+  --cream:#F3E6C8;--cream-l:#F9EFD6;--cream-d:#E5D4AC;
+  --kraft:#C9A66B;--brown:#5C4126;
+  --gray:#6B5B4E;--lg:#9B8770;
+  --border:rgba(165,35,25,0.18);
+  --fd:'Alfa Slab One',Georgia,serif;
+  --fd2:'Bree Serif',Georgia,serif;
+  --fb:'DM Sans',system-ui,-apple-system,sans-serif;
+}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{
+  font-family:var(--fb);background:var(--cream);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  user-select:none;-webkit-user-select:none;
+  position:fixed;width:100%;height:100%;top:0;left:0
+}
+
+.deck{position:relative;width:100%;height:100%;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 1.5rem 6rem;
+  opacity:0;visibility:hidden;
+  transform:translateX(60px);
+  transition:opacity .5s ease, transform .55s cubic-bezier(.22,.61,.36,1), visibility .5s;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch
+}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0)}
+.slide.prev{transform:translateX(-60px)}
+
+.bg-cream{background:var(--cream)}
+.bg-cream-grad{
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(210,93,30,.10), transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(165,35,25,.08), transparent 55%),
+    var(--cream)
+}
+.bg-black{background:var(--black);color:var(--cream)}
+.bg-black .stitle{color:var(--cream)}
+.bg-black .body{color:rgba(243,230,200,.78)}
+.bg-black .label-tag{color:var(--orange-l)}
+.bg-black .label-tag::before{background:var(--orange-l)}
+.bg-red{background:linear-gradient(180deg, var(--red) 0%, var(--red-d) 100%);color:var(--cream)}
+.bg-red .stitle{color:var(--cream)}
+.bg-red .body{color:rgba(243,230,200,.85)}
+.bg-red .label-tag{color:var(--cream-d)}
+.bg-red .label-tag::before{background:var(--cream-d)}
+
+.wrap{width:100%;max-width:960px;margin:0 auto;position:relative;z-index:2}
+
+/* DECORATIVE FLOURISHES — vintage saloon style */
+.flourish{position:absolute;pointer-events:none;z-index:1;font-family:var(--fd);color:var(--orange);opacity:.15;font-size:8rem;line-height:1}
+.flourish.tl{top:80px;left:-20px;transform:rotate(-15deg)}
+.flourish.br{bottom:90px;right:-20px;transform:rotate(15deg)}
+.deco-flag{position:absolute;top:64px;left:50%;transform:translateX(-50%);width:120px;height:6px;background:repeating-linear-gradient(90deg, var(--red) 0, var(--red) 20px, var(--green) 20px, var(--green) 40px, var(--cream-d) 40px, var(--cream-d) 60px);opacity:.4;pointer-events:none}
+
+.label-tag{
+  font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:.65rem;
+  font-family:var(--fb)
+}
+.label-tag::before{content:'❖';display:inline-block;color:var(--red);font-size:.9rem}
+
+.stitle{
+  font-family:var(--fd);font-weight:400;
+  font-size:clamp(2rem,7vw,3.6rem);
+  line-height:1.05;color:var(--red);
+  margin-bottom:1.25rem;letter-spacing:.005em
+}
+.stitle .accent{color:var(--green)}
+.stitle .accent-orange{color:var(--orange)}
+.stitle.huge{font-size:clamp(3.5rem,16vw,8.5rem);line-height:.9}
+
+.subtitle{
+  font-family:var(--fd2);
+  font-size:clamp(.9rem,2.5vw,1.1rem);font-weight:400;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase;
+  margin-bottom:1.5rem
+}
+
+.body{
+  font-size:clamp(1rem,2.4vw,1.15rem);
+  line-height:1.7;color:var(--brown);
+  max-width:680px;margin-bottom:1.5rem
+}
+.body strong{color:var(--red);font-weight:700}
+
+/* COVER */
+#cover{padding-top:7rem}
+.cv-cover-wrap{text-align:center}
+.cv-rule-fancy{
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  margin:1.5rem 0;color:var(--orange);font-size:1.2rem
+}
+.cv-rule-fancy::before,.cv-rule-fancy::after{
+  content:'';flex:1;max-width:80px;height:1px;background:var(--red);opacity:.5
+}
+.cv-meta{font-family:var(--fd2);font-size:1.1rem;color:var(--ink);font-weight:400;line-height:1.4;margin-bottom:.4rem}
+.cv-sub{font-size:.82rem;color:var(--gray);line-height:1.7;letter-spacing:.05em}
+.cv-badge{display:inline-block;margin-top:1.5rem;background:var(--red);color:var(--cream);font-size:.72rem;font-weight:700;padding:.45rem 1.1rem;border-radius:30px;letter-spacing:.18em;text-transform:uppercase}
+#cover .stitle.huge{font-family:var(--fd);font-weight:400;color:var(--red)}
+
+/* IMAGE FRAME */
+.img-frame{
+  display:block;width:100%;max-width:520px;margin:1.25rem auto;
+  border-radius:8px;overflow:hidden;
+  border:2px solid var(--red);
+  box-shadow:0 12px 40px rgba(0,0,0,.18);
+  position:relative;background:var(--cream-l)
+}
+.img-frame img{display:block;width:100%;height:auto}
+.img-frame.lg{max-width:760px}
+.img-frame.sm{max-width:380px}
+.bg-black .img-frame{border-color:var(--orange)}
+.bg-red .img-frame{border-color:var(--cream-d)}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin-top:1.25rem;width:100%}
+.stat-card{
+  background:rgba(255,255,255,.55);
+  border:1px solid var(--border);
+  border-left:3px solid var(--red);
+  border-radius:6px;padding:1rem 1.1rem
+}
+.stat-num{font-family:var(--fd);font-size:clamp(1.8rem,5.5vw,2.5rem);font-weight:400;color:var(--red);line-height:1;margin-bottom:.35rem}
+.stat-label{font-size:.85rem;color:var(--ink);font-weight:600;line-height:1.35;margin-bottom:.2rem}
+.stat-note{font-size:.72rem;color:var(--gray);line-height:1.4;font-style:italic}
+.bg-black .stat-card{background:rgba(255,255,255,.06);border-color:rgba(243,230,200,.15);border-left-color:var(--orange)}
+.bg-black .stat-num{color:var(--orange-l)}
+.bg-black .stat-label{color:var(--cream)}
+.bg-black .stat-note{color:rgba(243,230,200,.55)}
+
+/* PALETTE */
+.palette-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:1.25rem}
+.swatch{
+  aspect-ratio:1.5/1;border-radius:8px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:.85rem;position:relative;overflow:hidden;
+  border:2px solid rgba(0,0,0,.08)
+}
+.swatch-name{font-family:var(--fd2);font-size:.92rem;font-weight:400;line-height:1.1;margin-bottom:.2rem;letter-spacing:.04em}
+.swatch-hex{font-size:.7rem;font-family:'Courier New',monospace;letter-spacing:.05em;opacity:.85}
+.sw-red{background:var(--red);color:var(--cream)}
+.sw-orange{background:var(--orange);color:var(--cream)}
+.sw-green{background:var(--green);color:var(--cream-l)}
+.sw-black{background:var(--black);color:var(--cream)}
+.sw-cream{background:var(--cream);color:var(--ink);border:2px solid var(--brown)}
+
+/* TYPE */
+.type-block{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:.85rem}
+.type-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.type-display{font-family:var(--fd);font-size:clamp(1.8rem,5.5vw,2.6rem);font-weight:400;color:var(--red);line-height:1;margin-bottom:.4rem}
+.type-meta{font-size:.75rem;color:var(--gray);font-family:'Courier New',monospace}
+.type-body{font-family:var(--fb);font-size:1rem;color:var(--ink);line-height:1.7}
+.bg-black .type-block{background:rgba(255,255,255,.05);border-color:rgba(243,230,200,.15)}
+.bg-black .type-label{color:var(--orange-l)}
+.bg-black .type-display{color:var(--cream)}
+.bg-black .type-meta{color:rgba(243,230,200,.5)}
+
+/* PILLAR LIST */
+.pillar-list{margin-top:1.25rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+.pillar{
+  background:rgba(255,255,255,.5);border:1px solid var(--border);
+  border-radius:8px;padding:1rem;
+  display:flex;gap:.75rem;align-items:flex-start
+}
+.pillar-icon{font-size:1.4rem;flex-shrink:0;margin-top:-2px}
+.pillar-title{font-family:var(--fd2);font-size:.95rem;font-weight:400;color:var(--red);margin-bottom:.25rem;line-height:1.2}
+.pillar-desc{font-size:.78rem;color:var(--brown);line-height:1.5}
+.bg-black .pillar{background:rgba(255,255,255,.05);border-color:rgba(243,230,200,.15)}
+.bg-black .pillar-title{color:var(--orange-l)}
+.bg-black .pillar-desc{color:rgba(243,230,200,.65)}
+
+/* MANDATE */
+.mandate{background:linear-gradient(180deg, var(--red) 0%, var(--red-d) 100%);border-radius:8px;padding:1.5rem;margin-top:1.25rem;position:relative;border:2px solid var(--orange)}
+.mandate-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-l);margin-bottom:.5rem}
+.mandate-text{font-family:var(--fd2);font-size:clamp(1.2rem,3.2vw,1.5rem);font-weight:400;color:var(--cream);line-height:1.45}
+
+/* BENEFITS / SYMBOLS */
+.symbol-list{margin-top:1.25rem;display:grid;grid-template-columns:1fr;gap:.85rem}
+.symbol-card{
+  background:rgba(255,255,255,.5);border:1px solid var(--border);
+  border-radius:8px;padding:1.1rem;
+  display:flex;gap:1rem;align-items:flex-start
+}
+.symbol-icon{
+  font-family:var(--fd);font-size:1.5rem;color:var(--red);
+  width:50px;height:50px;background:var(--cream-d);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  border:2px solid var(--red)
+}
+.symbol-title{font-family:var(--fd2);font-size:1.05rem;color:var(--red);margin-bottom:.25rem;font-weight:400}
+.symbol-desc{font-size:.83rem;color:var(--brown);line-height:1.55}
+
+/* ELEMENTS LIST */
+.elements{margin-top:1.25rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+.element{
+  background:rgba(255,255,255,.5);border-left:3px solid var(--red);
+  padding:.75rem .9rem;border-radius:4px
+}
+.element-title{font-family:var(--fd2);font-size:.85rem;color:var(--red);font-weight:400;margin-bottom:.15rem}
+.element-desc{font-size:.74rem;color:var(--brown);line-height:1.45}
+
+/* FINAL */
+.final-cta{text-align:center;padding:1.5rem 0}
+.final-mark{font-family:var(--fd);font-size:clamp(2.8rem,11vw,5.5rem);font-weight:400;color:var(--cream);line-height:.95}
+.final-tag{font-family:var(--fd2);font-size:1rem;letter-spacing:.2em;color:var(--orange-l);text-transform:uppercase;margin-top:1rem}
+
+/* NAV */
+.nav-top{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--red);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;z-index:100
+}
+.nav-brand{font-family:var(--fd);font-size:1rem;color:var(--red);font-weight:400;letter-spacing:.05em;display:flex;flex-direction:column;line-height:1}
+.nav-brand span{font-family:var(--fb);font-size:.58rem;font-weight:500;letter-spacing:.2em;color:var(--green);text-transform:uppercase;margin-top:5px}
+.nav-counter{font-size:.78rem;color:var(--gray);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.nav-counter b{color:var(--red);font-weight:700}
+
+.progress{
+  position:fixed;top:54px;left:0;height:3px;
+  background:linear-gradient(90deg, var(--red), var(--orange), var(--green));
+  z-index:99;width:0%;transition:width .4s ease
+}
+
+.nav-bottom{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.85rem 1rem;
+  background:linear-gradient(to top, rgba(243,230,200,.95) 60%, transparent);
+  z-index:100;gap:.75rem;pointer-events:none
+}
+.nav-btn{
+  pointer-events:auto;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--cream-l);
+  border:2px solid var(--red);
+  color:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;backdrop-filter:blur(10px);
+  transition:all .25s;
+  -webkit-appearance:none;flex-shrink:0
+}
+.nav-btn:hover:not(:disabled){background:var(--red);color:var(--cream);transform:scale(1.05)}
+.nav-btn:active:not(:disabled){transform:scale(.95)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn svg{width:18px;height:18px;fill:currentColor}
+
+.dots{
+  pointer-events:auto;display:flex;gap:.4rem;align-items:center;
+  background:var(--cream-l);padding:.5rem .85rem;border-radius:30px;
+  border:2px solid var(--red);
+  flex:1;justify-content:center;max-width:300px;overflow-x:auto;
+  scrollbar-width:none
+}
+.dots::-webkit-scrollbar{display:none}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(165,35,25,.3);
+  cursor:pointer;transition:all .25s;flex-shrink:0;border:none;padding:0
+}
+.dot.active{background:var(--red);width:22px;border-radius:4px}
+.dot:hover{background:rgba(165,35,25,.6)}
+.dot.active:hover{background:var(--red)}
+
+.help-hint{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--cream);
+  font-size:.7rem;padding:.5rem 1rem;border-radius:30px;
+  border:1px solid var(--orange);
+  z-index:101;letter-spacing:.05em;
+  display:flex;align-items:center;gap:.5rem;
+  opacity:0;animation:hintShow 4s ease forwards;
+  pointer-events:none
+}
+@keyframes hintShow{
+  0%{opacity:0;transform:translateX(-50%) translateY(10px)}
+  15%{opacity:1;transform:translateX(-50%) translateY(0)}
+  80%{opacity:1}
+  100%{opacity:0}
+}
+.kbd{background:rgba(243,230,200,.15);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:.7rem;color:var(--orange-l);border:1px solid var(--orange)}
+
+.slide .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+.slide.active .fade-up{opacity:1;transform:translateY(0)}
+.slide.active .fade-up:nth-child(1){transition-delay:.1s}
+.slide.active .fade-up:nth-child(2){transition-delay:.2s}
+.slide.active .fade-up:nth-child(3){transition-delay:.3s}
+.slide.active .fade-up:nth-child(4){transition-delay:.4s}
+.slide.active .fade-up:nth-child(5){transition-delay:.5s}
+.slide.active .fade-up:nth-child(6){transition-delay:.6s}
+
+@media(min-width:640px){
+  .slide{padding:6rem 2.5rem 7rem}
+  .stat-grid{grid-template-columns:repeat(4,1fr)}
+  .palette-grid{grid-template-columns:repeat(5,1fr)}
+  .pillar-list{grid-template-columns:repeat(4,1fr)}
+  .symbol-list{grid-template-columns:repeat(3,1fr)}
+  .elements{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:1024px){
+  .slide{padding:7rem 4rem 7rem}
+}
+
+.slide::-webkit-scrollbar{width:6px}
+.slide::-webkit-scrollbar-track{background:transparent}
+.slide::-webkit-scrollbar-thumb{background:rgba(165,35,25,.3);border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav class="nav-top">
+  <div class="nav-brand">XIBALBÁ<span>Propuesta 02 · Taquería del Barrio</span></div>
+  <div class="nav-counter"><b id="counter-cur">01</b> / <span id="counter-total">10</span></div>
+</nav>
+
+<div class="progress" id="progress"></div>
+
+<div class="help-hint">
+  Usa <span class="kbd">←</span> <span class="kbd">→</span> · Espacio · o desliza
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide bg-cream-grad active" id="cover" data-slide="1">
+    <div class="deco-flag"></div>
+    <div class="flourish tl">❀</div>
+    <div class="flourish br">❀</div>
+    <div class="wrap cv-cover-wrap">
+      <div class="fade-up label-tag" style="justify-content:center">Propuesta 02 · 2026</div>
+      <h1 class="stitle huge fade-up">XIBALBÁ</h1>
+      <div class="subtitle fade-up">◆ Taquería del Barrio ◆</div>
+      <div class="cv-rule-fancy fade-up">❖ ❖ ❖</div>
+      <div class="cv-meta fade-up">El Jaguar Guardián del Inframundo</div>
+      <div class="cv-sub fade-up">Concepto cosmovisión mesoamericana<br>Logo emblema · Sistema visual cálido y festivo</div>
+      <div class="fade-up"><div class="cv-badge">Presentación Ejecutiva</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · CONCEPTO -->
+  <section class="slide bg-cream-grad" data-slide="2">
+    <div class="wrap">
+      <div class="fade-up label-tag">01 · Concepto + colores</div>
+      <h2 class="stitle fade-up">El jaguar,<br>el <span class="accent">guardián.</span></h2>
+      <p class="body fade-up">Inspirado en la cosmovisión mesoamericana, Xibalbá representa el tránsito, la transformación y la energía que emerge desde lo profundo. <strong>El jaguar</strong> — símbolo ancestral de poder — se convierte en el guardián de esta experiencia: una taquería que honra al ritual, lo cotidiano y lo simbólico.</p>
+      <div class="symbol-list fade-up">
+        <div class="symbol-card">
+          <div class="symbol-icon">🐆</div>
+          <div>
+            <div class="symbol-title">El Jaguar</div>
+            <div class="symbol-desc">Fuerza, protección, dominio entre mundos. Guardián del tránsito entre lo conocido y lo profundo.</div>
+          </div>
+        </div>
+        <div class="symbol-card">
+          <div class="symbol-icon">IX</div>
+          <div>
+            <div class="symbol-title">El Número IX</div>
+            <div class="symbol-desc">Asociado al inframundo en la cosmovisión maya. Simboliza el inicio de un nuevo ciclo y el poder de la transformación.</div>
+          </div>
+        </div>
+        <div class="symbol-card">
+          <div class="symbol-icon">◈</div>
+          <div>
+            <div class="symbol-title">El Glifo</div>
+            <div class="symbol-desc">Sistema gráfico basado en geometría ritual mesoamericana. Funciona como sello, patrón y lenguaje transversal.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · LOGOTIPO -->
+  <section class="slide bg-cream" data-slide="3">
+    <div class="wrap">
+      <div class="fade-up label-tag">02 · Sistema de identidad</div>
+      <h2 class="stitle fade-up">El emblema<br>del <span class="accent">barrio.</span></h2>
+      <p class="body fade-up">Tipografía slab con presencia, jaguar como guardián central, ornamentos vintage de cantina mexicana. La marca se siente cálida, festiva y profundamente cultural.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_02__Logotipo_Xibalba_Prop_02.png" alt="Logo Xibalbá Propuesta 02 · Taquería del Barrio">
+      </div>
+      <p class="body fade-up" style="text-align:center;font-size:.85rem;margin:0 auto;color:var(--gray)">Versión ornamental · neutral · responsive · monograma · favicon · avatar</p>
+    </div>
+  </section>
+
+  <!-- 4 · PALETA + TIPO -->
+  <section class="slide bg-cream-grad" data-slide="4">
+    <div class="wrap">
+      <div class="fade-up label-tag">03 · Paleta de color</div>
+      <h2 class="stitle fade-up">Tierra, fuego<br>y <span class="accent">tradición.</span></h2>
+      <p class="body fade-up">Colores que evocan la sazón mesoamericana: rojo barro de la pasión, naranja quemado del fogón, verde tierra del equilibrio, negro tinta del contraste, y crema como soporte cálido.</p>
+      <div class="palette-grid fade-up">
+        <div class="swatch sw-red"><div class="swatch-name">Rojo Barro</div><div class="swatch-hex">#A52319</div></div>
+        <div class="swatch sw-orange"><div class="swatch-name">Naranja Quemado</div><div class="swatch-hex">#D25D1E</div></div>
+        <div class="swatch sw-green"><div class="swatch-name">Verde Tierra</div><div class="swatch-hex">#3C6E37</div></div>
+        <div class="swatch sw-black"><div class="swatch-name">Negro Tinta</div><div class="swatch-hex">#1A1009</div></div>
+        <div class="swatch sw-cream"><div class="swatch-name">Crema</div><div class="swatch-hex">#F3E6C8</div></div>
+      </div>
+      <div class="type-block fade-up" style="margin-top:1.5rem">
+        <div class="type-label">Tipografía principal · Slab serif</div>
+        <div class="type-display">XIBALBÁ</div>
+        <div class="type-meta">Carácter rústico, lectura cómoda, presencia</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · WEARABLES -->
+  <section class="slide bg-cream" data-slide="5">
+    <div class="wrap">
+      <div class="fade-up label-tag">04 · Indumentaria</div>
+      <h2 class="stitle fade-up">Pechera<br>de <span class="accent-orange">chef.</span></h2>
+      <p class="body fade-up">"Orgullo · tradición · sabor". Diseñada para quienes llevan en cada platillo el espíritu del inframundo. Bordados de alta definición, herrajes de calidad, detalles que cuentan historias.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_02__Detalle_01.png" alt="Pechera de chef Xibalbá · Propuesta 02">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · POLERA -->
+  <section class="slide bg-cream-grad" data-slide="6">
+    <div class="wrap">
+      <div class="fade-up label-tag">05 · Polera · merchandising</div>
+      <h2 class="stitle fade-up">El jaguar<br>en <span class="accent">cada espalda.</span></h2>
+      <p class="body fade-up">Polera frente y espalda con el guardián a todo volumen. Estampado serigráfico al agua, corte oversize unisex, 100% algodón peinado. <strong>"El jaguar, guardián del inframundo".</strong></p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_02__Detalle_03.png" alt="Polera Xibalbá · Propuesta 02">
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · POSAVASOS -->
+  <section class="slide bg-cream" data-slide="7">
+    <div class="wrap">
+      <div class="fade-up label-tag">06 · Mesa</div>
+      <h2 class="stitle fade-up">Posavasos<br>con <span class="accent">historia.</span></h2>
+      <p class="body fade-up">Cartón absorbente de alta calidad, 9.5 cm, serigrafía 2 tintas + tinta especial. <strong>"El guardián del inframundo · Tacos · Salsas · Mezcal".</strong> Coleccionables, que cuentan un símbolo distinto.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_02__Detalle_02.png" alt="Posavasos Xibalbá · Propuesta 02">
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · PACKAGING -->
+  <section class="slide bg-cream-grad" data-slide="8">
+    <div class="wrap">
+      <div class="fade-up label-tag">07 · Packaging delivery</div>
+      <h2 class="stitle fade-up">Cada detalle,<br>una <span class="accent">extensión.</span></h2>
+      <p class="body fade-up">Caja de cartón micro-corrugado con tinta a base de agua, bolsa kraft premium, papel envoltorio con patrón del jaguar, stickers de cierre. <strong>Tradición que se entrega contigo.</strong></p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_02__Detalle_04.png" alt="Packaging Xibalbá · Propuesta 02">
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · CARTA -->
+  <section class="slide bg-cream" data-slide="9">
+    <div class="wrap">
+      <div class="fade-up label-tag">08 · Carta menú</div>
+      <h2 class="stitle fade-up">Cocinamos historias,<br>servimos <span class="accent">tradición.</span></h2>
+      <p class="body fade-up">Carta A4 vertical, dos caras: portada cálida con la historia del jaguar, reverso negro con el menú. Papel kraft premium 200 grs, laminado mate anti-huellas.</p>
+      <div class="elements fade-up">
+        <div class="element"><div class="element-title">Logo central</div><div class="element-desc">Jaguar como protagonista, fuerza visual.</div></div>
+        <div class="element"><div class="element-title">Patrones meso</div><div class="element-desc">Grecas que enmarcan y dan identidad.</div></div>
+        <div class="element"><div class="element-title">Iconografía</div><div class="element-desc">Fuego · maíz · raíces · tradición.</div></div>
+        <div class="element"><div class="element-title">Paleta terrosa</div><div class="element-desc">Tierra, fuego, maíz e inframundo.</div></div>
+        <div class="element"><div class="element-title">Tipografía rústica</div><div class="element-desc">Carácter en títulos, claridad en lectura.</div></div>
+        <div class="element"><div class="element-title">Acabado mate</div><div class="element-desc">Textura natural, sensación premium.</div></div>
+      </div>
+      <div class="img-frame lg fade-up" style="margin-top:1.25rem">
+        <img src="assets/Prop_02__Detalle_05.png" alt="Carta menú Xibalbá · Propuesta 02">
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · CIERRE -->
+  <section class="slide bg-red" data-slide="10">
+    <div class="flourish tl" style="color:var(--cream-d);opacity:.2">❀</div>
+    <div class="flourish br" style="color:var(--cream-d);opacity:.2">❀</div>
+    <div class="wrap final-cta">
+      <div class="fade-up label-tag" style="justify-content:center;color:var(--cream-d)">Fin · Propuesta 02</div>
+      <div class="fade-up final-mark">XIBALBÁ</div>
+      <div class="fade-up cv-rule-fancy" style="color:var(--orange-l)">❖ ❖ ❖</div>
+      <div class="fade-up final-tag">Taquería del Barrio</div>
+      <p class="body fade-up" style="text-align:center;margin:2rem auto 0;color:rgba(243,230,200,.85);max-width:520px"><strong style="color:var(--orange-l)">"Cocinamos historias, servimos tradición."</strong></p>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-bottom">
+  <button class="nav-btn" id="btn-prev" aria-label="Anterior">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="btn-next" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const counterCur = document.getElementById('counter-cur');
+  const counterTotal = document.getElementById('counter-total');
+  const progress = document.getElementById('progress');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const dotsWrap = document.getElementById('dots');
+  let current = 0;
+  let isAnimating = false;
+
+  counterTotal.textContent = String(total).padStart(2,'0');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i===0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Ir a slide ' + (i+1));
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  }
+  const dots = document.querySelectorAll('.dot');
+
+  function update(){
+    slides.forEach((s, i) => {
+      s.classList.remove('active','prev');
+      if (i === current) s.classList.add('active');
+      else if (i < current) s.classList.add('prev');
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counterCur.textContent = String(current + 1).padStart(2, '0');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    const active = slides[current];
+    if (active) active.scrollTop = 0;
+    const activeDot = dots[current];
+    if (activeDot && activeDot.scrollIntoView) {
+      try { activeDot.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'}); } catch(e){}
+    }
+  }
+
+  function goTo(i){
+    if (isAnimating) return;
+    if (i < 0 || i >= total || i === current) return;
+    isAnimating = true;
+    current = i;
+    update();
+    setTimeout(() => { isAnimating = false; }, 450);
+  }
+  function next(){ goTo(current + 1); }
+  function prev(){ goTo(current - 1); }
+
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); next();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); prev();
+    } else if (e.key === 'Home') {
+      e.preventDefault(); goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); goTo(total - 1);
+    } else if (/^[0-9]$/.test(e.key)) {
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= total) goTo(n - 1);
+    }
+  });
+
+  let touchStartX = 0, touchStartY = 0, touchStartT = 0;
+  const SWIPE_THRESHOLD = 60;
+  const SWIPE_MAX_TIME = 600;
+  document.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY; touchStartT = Date.now();
+  }, {passive: true});
+  document.addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    const dt = Date.now() - touchStartT;
+    if (dt > SWIPE_MAX_TIME) return;
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if (Math.abs(dy) > Math.abs(dx) * 0.6) return;
+    if (dx < 0) next(); else prev();
+  }, {passive: true});
+
+  let wheelLock = false, wheelAccum = 0;
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (!isTouch) {
+    document.addEventListener('wheel', (e) => {
+      const active = slides[current];
+      const canScrollDown = active.scrollHeight - active.scrollTop - active.clientHeight > 4;
+      const canScrollUp = active.scrollTop > 4;
+      if (e.deltaY > 0 && canScrollDown) return;
+      if (e.deltaY < 0 && canScrollUp) return;
+      if (wheelLock) return;
+      wheelAccum += e.deltaY;
+      if (Math.abs(wheelAccum) > 80) {
+        wheelLock = true;
+        if (wheelAccum > 0) next(); else prev();
+        wheelAccum = 0;
+        setTimeout(() => { wheelLock = false; }, 700);
+      }
+    }, {passive: true});
+  }
+
+  update();
+})();
+</script>
+
+</body>
+</html>

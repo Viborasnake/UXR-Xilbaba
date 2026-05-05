@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Xibalbá · Propuesta 01 — Inframundo Maya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  /* Prop 01 — Inframundo Maya */
+  --black:#0E0805;--dark:#1A1009;--dark-2:#241710;--brown:#3D2E1E;
+  --gold:#C8A24A;--gold-l:#E8C475;--gold-d:#9B7A2E;
+  --red:#A52319;--red-d:#7A1A14;
+  --kraft:#C8A878;--kraft-l:#E0C898;
+  --cream:#F5E5C8;--cream-l:#FFF3E0;
+  --leaf:#5C7547;
+  --gray:#8B7B6E;--lg:#A89A8E;
+  --border:rgba(200,162,74,0.2);
+  --fd:'Cinzel',Georgia,serif;
+  --fb:'DM Sans',system-ui,-apple-system,sans-serif;
+}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{
+  font-family:var(--fb);background:var(--black);color:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  user-select:none;-webkit-user-select:none;
+  position:fixed;width:100%;height:100%;top:0;left:0
+}
+
+.deck{position:relative;width:100%;height:100%;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 1.5rem 6rem;
+  opacity:0;visibility:hidden;
+  transform:translateX(60px);
+  transition:opacity .5s ease, transform .55s cubic-bezier(.22,.61,.36,1), visibility .5s;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch
+}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0)}
+.slide.prev{transform:translateX(-60px)}
+
+.bg-black{background:var(--black)}
+.bg-dark{background:var(--dark)}
+.bg-dark-grad{
+  background:
+    radial-gradient(ellipse at 25% 15%, rgba(200,162,74,.10), transparent 55%),
+    radial-gradient(ellipse at 80% 85%, rgba(165,35,25,.14), transparent 55%),
+    var(--dark)
+}
+.bg-red{background:linear-gradient(135deg, var(--red) 0%, var(--red-d) 100%)}
+.bg-kraft{background:var(--kraft);color:var(--brown)}
+.bg-kraft .stitle, .bg-kraft .body{color:var(--brown)}
+.bg-kraft .label-tag{color:var(--red-d)}
+.bg-kraft .label-tag::before{background:var(--red-d)}
+.bg-kraft .stat-card{background:rgba(255,255,255,.5);border-color:rgba(165,35,25,.2);border-left-color:var(--red)}
+.bg-kraft .stat-num{color:var(--red)}
+.bg-kraft .stat-label{color:var(--brown)}
+.bg-kraft .stat-note{color:var(--gray)}
+
+.wrap{width:100%;max-width:960px;margin:0 auto;position:relative;z-index:2}
+
+/* MAYA-STYLE CORNERS — squared frame patterns */
+.maya-corner{position:absolute;width:60px;height:60px;pointer-events:none;z-index:1}
+.maya-corner.tl{top:72px;left:1rem;border-top:2px solid var(--gold);border-left:2px solid var(--gold)}
+.maya-corner.tr{top:72px;right:1rem;border-top:2px solid var(--gold);border-right:2px solid var(--gold)}
+.maya-corner.bl{bottom:80px;left:1rem;border-bottom:2px solid var(--gold);border-left:2px solid var(--gold)}
+.maya-corner.br{bottom:80px;right:1rem;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold)}
+.maya-corner::before{content:'';position:absolute;width:8px;height:8px;background:var(--red);border:1px solid var(--gold)}
+.maya-corner.tl::before{top:-5px;left:-5px}
+.maya-corner.tr::before{top:-5px;right:-5px}
+.maya-corner.bl::before{bottom:-5px;left:-5px}
+.maya-corner.br::before{bottom:-5px;right:-5px}
+
+.deco-circle{position:absolute;border-radius:50%;pointer-events:none;z-index:1}
+
+.label-tag{
+  font-size:.7rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.65rem
+}
+.label-tag::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold)}
+
+.stitle{
+  font-family:var(--fd);font-weight:700;
+  font-size:clamp(2rem,7vw,3.8rem);
+  line-height:1.1;color:var(--cream);
+  margin-bottom:1.25rem;letter-spacing:.01em
+}
+.stitle .accent{color:var(--gold-l);font-style:normal}
+.stitle.huge{font-size:clamp(3rem,15vw,8rem);font-weight:900;line-height:.95;letter-spacing:.05em}
+
+.subtitle{
+  font-size:clamp(.85rem,2.5vw,1rem);font-weight:500;
+  letter-spacing:.25em;color:var(--gold);text-transform:uppercase;
+  margin-bottom:1.5rem
+}
+
+.body{
+  font-size:clamp(1rem,2.4vw,1.15rem);
+  line-height:1.7;color:rgba(245,229,200,.78);
+  max-width:680px;margin-bottom:1.5rem
+}
+.body strong{color:var(--gold-l);font-weight:600}
+
+/* COVER */
+#cover{padding-top:7rem}
+#cover .stitle.huge{font-family:var(--fd);font-weight:900;color:var(--cream);text-shadow:0 0 30px rgba(200,162,74,.15)}
+.cv-rule{width:80px;height:2px;background:var(--gold);margin:0 auto 1.25rem;position:relative}
+.cv-rule::before,.cv-rule::after{content:'';position:absolute;top:-3px;width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+.cv-rule::before{left:-12px}
+.cv-rule::after{right:-12px}
+.cv-cover-wrap{text-align:center}
+.cv-meta{font-size:.95rem;color:var(--cream);font-weight:500;line-height:1.4;margin-bottom:.4rem}
+.cv-sub{font-size:.8rem;color:rgba(245,229,200,.5);line-height:1.7;letter-spacing:.05em}
+.cv-badge{display:inline-block;margin-top:1.5rem;background:var(--red);color:var(--cream);font-size:.72rem;font-weight:600;padding:.45rem 1.1rem;border-radius:30px;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--gold)}
+
+/* IMAGE FRAME */
+.img-frame{
+  display:block;width:100%;max-width:520px;margin:1.25rem auto;
+  border-radius:8px;overflow:hidden;
+  border:1px solid rgba(200,162,74,.3);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  position:relative
+}
+.img-frame img{display:block;width:100%;height:auto}
+.img-frame.lg{max-width:720px}
+.img-frame.sm{max-width:380px}
+
+.img-grid{
+  display:grid;grid-template-columns:1fr;gap:.85rem;
+  margin-top:1.25rem;width:100%;max-width:760px
+}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin-top:1.25rem;width:100%}
+.stat-card{
+  background:rgba(200,162,74,.06);
+  border:1px solid rgba(200,162,74,.18);
+  border-left:3px solid var(--gold);
+  border-radius:6px;padding:1rem 1.1rem
+}
+.stat-num{font-family:var(--fd);font-size:clamp(1.8rem,5.5vw,2.5rem);font-weight:900;color:var(--gold-l);line-height:1;margin-bottom:.35rem}
+.stat-label{font-size:.85rem;color:var(--cream);font-weight:600;line-height:1.35;margin-bottom:.2rem}
+.stat-note{font-size:.72rem;color:rgba(245,229,200,.5);line-height:1.4;font-style:italic}
+
+/* PALETTE */
+.palette-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:1.25rem}
+.swatch{
+  aspect-ratio:1.5/1;border-radius:6px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:.85rem;position:relative;overflow:hidden;
+  border:1px solid rgba(200,162,74,.2)
+}
+.swatch-name{font-family:var(--fd);font-size:.85rem;font-weight:700;line-height:1.1;margin-bottom:.2rem;letter-spacing:.05em}
+.swatch-hex{font-size:.7rem;font-family:'Courier New',monospace;letter-spacing:.05em;opacity:.85}
+.sw-black{background:var(--black);color:var(--gold-l);border:1px solid rgba(200,162,74,.3)}
+.sw-gold{background:var(--gold);color:var(--black)}
+.sw-red{background:var(--red);color:var(--cream)}
+.sw-kraft{background:var(--kraft);color:var(--brown)}
+
+/* TYPE */
+.type-block{background:rgba(200,162,74,.06);border:1px solid rgba(200,162,74,.18);border-radius:6px;padding:1.25rem;margin-bottom:.85rem}
+.type-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.type-display{font-family:var(--fd);font-size:clamp(1.8rem,5.5vw,2.6rem);font-weight:900;color:var(--cream);line-height:1;margin-bottom:.4rem;letter-spacing:.05em}
+.type-meta{font-size:.75rem;color:rgba(245,229,200,.5);font-family:'Courier New',monospace}
+.type-body{font-family:var(--fb);font-size:1rem;color:rgba(245,229,200,.85);line-height:1.7}
+
+/* PILLAR LIST */
+.pillar-list{margin-top:1.25rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+.pillar{
+  background:rgba(200,162,74,.06);border:1px solid rgba(200,162,74,.18);
+  border-radius:6px;padding:1rem;
+  display:flex;gap:.75rem;align-items:flex-start
+}
+.pillar-icon{font-size:1.4rem;flex-shrink:0;margin-top:-2px}
+.pillar-title{font-family:var(--fd);font-size:.9rem;font-weight:700;color:var(--gold-l);margin-bottom:.25rem;line-height:1.2;letter-spacing:.04em}
+.pillar-desc{font-size:.78rem;color:rgba(245,229,200,.65);line-height:1.5}
+
+/* MANDATE */
+.mandate{background:linear-gradient(135deg, var(--red) 0%, var(--red-d) 100%);border:1px solid var(--gold);border-radius:6px;padding:1.5rem;margin-top:1.25rem;position:relative}
+.mandate::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:1px solid rgba(200,162,74,.3);border-radius:4px;pointer-events:none}
+.mandate-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-l);margin-bottom:.5rem;position:relative}
+.mandate-text{font-family:var(--fd);font-size:clamp(1.1rem,3vw,1.4rem);font-weight:700;color:var(--cream);line-height:1.45;position:relative;letter-spacing:.02em}
+
+/* JOURNEY */
+.journey{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:1.25rem}
+.journey-step{
+  background:rgba(200,162,74,.05);border:1px solid rgba(200,162,74,.15);
+  border-radius:6px;padding:.9rem;text-align:center
+}
+.journey-icon{font-size:1.6rem;margin-bottom:.4rem;display:block}
+.journey-name{font-family:var(--fd);font-size:.78rem;font-weight:700;color:var(--gold-l);letter-spacing:.1em;margin-bottom:.2rem;text-transform:uppercase}
+.journey-desc{font-size:.72rem;color:rgba(245,229,200,.6);line-height:1.4}
+
+/* PRINCIPLES */
+.principle-list{margin-top:1.25rem;display:flex;flex-direction:column;gap:.55rem}
+.principle{
+  background:rgba(200,162,74,.05);border-left:2px solid var(--gold);
+  padding:.7rem 1rem;font-size:.92rem;color:rgba(245,229,200,.85);line-height:1.5
+}
+.principle::before{content:'❖';color:var(--gold);margin-right:.6rem}
+
+/* DO/DONT */
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.25rem}
+.dd-col{background:rgba(200,162,74,.05);border:1px solid rgba(200,162,74,.18);border-radius:6px;padding:1rem}
+.dd-col.no{border-color:rgba(165,35,25,.3)}
+.dd-title{font-family:var(--fd);font-size:.95rem;font-weight:700;margin-bottom:.6rem;letter-spacing:.05em}
+.dd-col.yes .dd-title{color:var(--leaf)}
+.dd-col.no .dd-title{color:var(--red)}
+.dd-item{font-size:.8rem;line-height:1.5;color:rgba(245,229,200,.8);margin-bottom:.35rem;padding-left:1rem;position:relative}
+.dd-col.yes .dd-item::before{content:'✓';color:var(--leaf);position:absolute;left:0;font-weight:700}
+.dd-col.no .dd-item::before{content:'✕';color:var(--red);position:absolute;left:0;font-weight:700}
+
+/* FINAL */
+.final-cta{text-align:center;padding:1.5rem 0}
+.final-mark{font-family:var(--fd);font-size:clamp(2.8rem,10vw,5rem);font-weight:900;color:var(--gold-l);letter-spacing:.05em}
+.final-tag{font-size:.85rem;letter-spacing:.25em;color:rgba(245,229,200,.5);text-transform:uppercase;margin-top:1rem}
+
+/* NAV */
+.nav-top{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:rgba(14,8,5,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(200,162,74,.25);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;z-index:100
+}
+.nav-brand{font-family:var(--fd);font-size:1rem;color:var(--gold-l);font-weight:700;letter-spacing:.15em;display:flex;flex-direction:column;line-height:1}
+.nav-brand span{font-family:var(--fb);font-size:.58rem;font-weight:300;letter-spacing:.2em;color:rgba(245,229,200,.45);text-transform:uppercase;margin-top:4px}
+.nav-counter{font-size:.78rem;color:rgba(245,229,200,.55);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.nav-counter b{color:var(--gold-l);font-weight:700}
+
+.progress{
+  position:fixed;top:56px;left:0;height:2px;
+  background:linear-gradient(90deg, var(--red), var(--gold-l));
+  z-index:99;width:0%;transition:width .4s ease
+}
+
+.nav-bottom{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.85rem 1rem;
+  background:linear-gradient(to top, rgba(14,8,5,.95) 60%, transparent);
+  z-index:100;gap:.75rem;pointer-events:none
+}
+.nav-btn{
+  pointer-events:auto;
+  width:46px;height:46px;border-radius:6px;
+  background:rgba(200,162,74,.1);
+  border:1px solid rgba(200,162,74,.35);
+  color:var(--gold-l);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;backdrop-filter:blur(10px);
+  transition:all .25s;
+  -webkit-appearance:none;flex-shrink:0
+}
+.nav-btn:hover:not(:disabled){background:var(--red);border-color:var(--gold);color:var(--cream);transform:scale(1.05)}
+.nav-btn:active:not(:disabled){transform:scale(.95)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn svg{width:18px;height:18px;fill:currentColor}
+
+.dots{
+  pointer-events:auto;display:flex;gap:.4rem;align-items:center;
+  background:rgba(0,0,0,.5);padding:.5rem .85rem;border-radius:30px;
+  border:1px solid rgba(200,162,74,.25);backdrop-filter:blur(10px);
+  flex:1;justify-content:center;max-width:300px;overflow-x:auto;
+  scrollbar-width:none
+}
+.dots::-webkit-scrollbar{display:none}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(245,229,200,.25);
+  cursor:pointer;transition:all .25s;flex-shrink:0;border:none;padding:0
+}
+.dot.active{background:var(--gold-l);width:22px;border-radius:4px}
+.dot:hover{background:rgba(245,229,200,.5)}
+.dot.active:hover{background:var(--gold-l)}
+
+.help-hint{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.85);color:var(--cream);
+  font-size:.7rem;padding:.5rem 1rem;border-radius:30px;
+  border:1px solid rgba(200,162,74,.3);
+  z-index:101;letter-spacing:.05em;
+  display:flex;align-items:center;gap:.5rem;
+  opacity:0;animation:hintShow 4s ease forwards;
+  pointer-events:none;backdrop-filter:blur(10px)
+}
+@keyframes hintShow{
+  0%{opacity:0;transform:translateX(-50%) translateY(10px)}
+  15%{opacity:1;transform:translateX(-50%) translateY(0)}
+  80%{opacity:1}
+  100%{opacity:0}
+}
+.kbd{background:rgba(200,162,74,.2);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:.7rem;color:var(--gold-l);border:1px solid rgba(200,162,74,.3)}
+
+.slide .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+.slide.active .fade-up{opacity:1;transform:translateY(0)}
+.slide.active .fade-up:nth-child(1){transition-delay:.1s}
+.slide.active .fade-up:nth-child(2){transition-delay:.2s}
+.slide.active .fade-up:nth-child(3){transition-delay:.3s}
+.slide.active .fade-up:nth-child(4){transition-delay:.4s}
+.slide.active .fade-up:nth-child(5){transition-delay:.5s}
+.slide.active .fade-up:nth-child(6){transition-delay:.6s}
+.slide.active .fade-up:nth-child(7){transition-delay:.7s}
+
+@media(min-width:640px){
+  .slide{padding:6rem 2.5rem 7rem}
+  .stat-grid{grid-template-columns:repeat(4,1fr)}
+  .palette-grid{grid-template-columns:repeat(4,1fr)}
+  .pillar-list{grid-template-columns:repeat(4,1fr)}
+  .journey{grid-template-columns:repeat(5,1fr)}
+  .img-grid{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1024px){
+  .slide{padding:7rem 4rem 7rem}
+}
+
+.slide::-webkit-scrollbar{width:6px}
+.slide::-webkit-scrollbar-track{background:transparent}
+.slide::-webkit-scrollbar-thumb{background:rgba(200,162,74,.3);border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav class="nav-top">
+  <div class="nav-brand">XIBALBÁ<span>Propuesta 01 · Inframundo Maya</span></div>
+  <div class="nav-counter"><b id="counter-cur">01</b> / <span id="counter-total">11</span></div>
+</nav>
+
+<div class="progress" id="progress"></div>
+
+<div class="help-hint">
+  Usa <span class="kbd">←</span> <span class="kbd">→</span> · Espacio · o desliza
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide bg-dark-grad active" id="cover" data-slide="1">
+    <div class="maya-corner tl"></div>
+    <div class="maya-corner tr"></div>
+    <div class="maya-corner bl"></div>
+    <div class="maya-corner br"></div>
+    <div class="wrap cv-cover-wrap">
+      <div class="fade-up label-tag" style="justify-content:center">Propuesta 01 · 2026</div>
+      <div class="fade-up cv-rule"></div>
+      <h1 class="stitle huge fade-up">XIBALBÁ</h1>
+      <div class="subtitle fade-up">Taquería · Inframundo Maya · Santiago</div>
+      <div class="fade-up cv-rule"></div>
+      <div class="cv-meta fade-up">El Inframundo Maya, donde todo comienza</div>
+      <div class="cv-sub fade-up">Concepto ceremonial · Logo figurativo<br>Sistema visual ritual y artesanal</div>
+      <div class="fade-up"><div class="cv-badge">Presentación Ejecutiva</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · CONCEPTO -->
+  <section class="slide bg-dark-grad" data-slide="2">
+    <div class="wrap">
+      <div class="fade-up label-tag">01 · Concepto de marca</div>
+      <h2 class="stitle fade-up">No es muerte,<br>es <span class="accent">tránsito.</span></h2>
+      <p class="body fade-up">Xibalbá representa el inframundo maya: <strong>un espacio de transformación, tránsito y origen</strong>. Una taquería que convierte la comida en una experiencia ritual, sensorial y cultural — donde lo ancestral no decora, sino que estructura cada decisión.</p>
+      <div class="pillar-list fade-up">
+        <div class="pillar"><div class="pillar-icon">🌾</div><div><div class="pillar-title">Autenticidad</div><div class="pillar-desc">Inspiración cultural real, sin clichés.</div></div></div>
+        <div class="pillar"><div class="pillar-icon">🔥</div><div><div class="pillar-title">Ritual</div><div class="pillar-desc">Cada interacción tiene intención.</div></div></div>
+        <div class="pillar"><div class="pillar-icon">◈</div><div><div class="pillar-title">Materialidad</div><div class="pillar-desc">Lo físico transmite valor premium.</div></div></div>
+        <div class="pillar"><div class="pillar-icon">☀</div><div><div class="pillar-title">Contraste</div><div class="pillar-desc">Oscuro (misterio) + cálido (cercanía).</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · LOGOTIPO -->
+  <section class="slide bg-black" data-slide="3">
+    <div class="maya-corner tl"></div>
+    <div class="maya-corner tr"></div>
+    <div class="wrap">
+      <div class="fade-up label-tag">02 · Sistema visual</div>
+      <h2 class="stitle fade-up">El sello<br>del <span class="accent">guardián.</span></h2>
+      <p class="body fade-up">La figura ritual sosteniendo el cuenco humeante es la voz central de la marca. Acompaña al espectador desde el portal hasta el último detalle del posavasos.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_01__Logotipo_Xibalba_Prop_01.png" alt="Logo Xibalbá Propuesta 01 · Inframundo Maya">
+      </div>
+      <p class="body fade-up" style="text-align:center;font-size:.85rem;margin:0 auto;color:rgba(245,229,200,.55)">Versión ornamental · neutral · responsive · monograma · favicon · avatar RRSS</p>
+    </div>
+  </section>
+
+  <!-- 4 · PALETA + TIPOGRAFÍA -->
+  <section class="slide bg-dark" data-slide="4">
+    <div class="wrap">
+      <div class="fade-up label-tag">03 · Paleta de colores</div>
+      <h2 class="stitle fade-up">Negro, dorado<br>y <span class="accent">tierra.</span></h2>
+      <p class="body fade-up">Una paleta que evoca el ritual maya: el negro del inframundo, el dorado del valor sagrado, el rojo del fuego y la pasión, y el kraft del origen orgánico.</p>
+      <div class="palette-grid fade-up">
+        <div class="swatch sw-black"><div class="swatch-name">Negro Profundo</div><div class="swatch-hex">Misterio</div></div>
+        <div class="swatch sw-gold"><div class="swatch-name">Dorado Ritual</div><div class="swatch-hex">Valor · Premium</div></div>
+        <div class="swatch sw-red"><div class="swatch-name">Rojo Tierra</div><div class="swatch-hex">Energía · Fuego</div></div>
+        <div class="swatch sw-kraft"><div class="swatch-name">Kraft</div><div class="swatch-hex">Natural · Orgánico</div></div>
+      </div>
+      <div class="type-block fade-up" style="margin-top:1.5rem">
+        <div class="type-label">Tipografía principal · Serif con carácter</div>
+        <div class="type-display">XIBALBÁ</div>
+        <div class="type-meta">Inspirada en la cultura y la historia maya</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · WEARABLES + PACKAGING -->
+  <section class="slide bg-black" data-slide="5">
+    <div class="wrap">
+      <div class="fade-up label-tag">04 · Aplicaciones · Wearables</div>
+      <h2 class="stitle fade-up">La identidad<br>se <span class="accent">viste.</span></h2>
+      <p class="body fade-up">Polera y pechera de chef construyen pertenencia en el equipo y transmiten la esencia ritual al cliente desde el primer contacto.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_01__Detalle_01.png" alt="Wearables Xibalbá · Polera y Pechera de Chef">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · PACKAGING -->
+  <section class="slide bg-dark" data-slide="6">
+    <div class="wrap">
+      <div class="fade-up label-tag">05 · Packaging delivery</div>
+      <h2 class="stitle fade-up">La experiencia<br>comienza <span class="accent">antes de abrir.</span></h2>
+      <p class="body fade-up">Bolsa, caja y papel envoltorio en kraft con tinta única: el cliente recibe un objeto, no un envase. <strong>Materialidad &gt; decoración.</strong></p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_01__Detalle_02.png" alt="Packaging Xibalbá · Bolsa, caja y papel envoltorio">
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · MESA Y ADHESIVOS -->
+  <section class="slide bg-black" data-slide="7">
+    <div class="wrap">
+      <div class="fade-up label-tag">06 · Mesa y cierre</div>
+      <h2 class="stitle fade-up">Detalles<br>que <span class="accent">se recuerdan.</span></h2>
+      <p class="body fade-up">Posavasos en dos colores, servilletas con grecas mayas, stickers que sellan la caja: cada elemento construye experiencia en la mesa y en el delivery.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_01__Detalle_03.png" alt="Mesa y adhesivos Xibalbá · Posavasos, servilletas, stickers">
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · CARTA -->
+  <section class="slide bg-dark-grad" data-slide="8">
+    <div class="wrap">
+      <div class="fade-up label-tag">07 · Carta y materialidad</div>
+      <h2 class="stitle fade-up">Cruzas<br>un <span class="accent">umbral.</span></h2>
+      <p class="body fade-up">Carta sobre papel premium con doble cara: portada en kraft cálido con la historia, reverso en negro profundo con los platos. Tinta dorada y mate soft touch.</p>
+      <div class="img-frame lg fade-up">
+        <img src="assets/Prop_01__Detalle_04.png" alt="Carta Xibalbá · Materialidad y diseño">
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · JOURNEY + PRINCIPIOS -->
+  <section class="slide bg-black" data-slide="9">
+    <div class="wrap">
+      <div class="fade-up label-tag">08 · Experiencia de marca</div>
+      <h2 class="stitle fade-up">El journey<br>del <span class="accent">comensal.</span></h2>
+      <div class="journey fade-up">
+        <div class="journey-step"><span class="journey-icon">👁</span><div class="journey-name">Ve la marca</div><div class="journey-desc">Primer impacto que genera curiosidad</div></div>
+        <div class="journey-step"><span class="journey-icon">🛍</span><div class="journey-name">Recibe</div><div class="journey-desc">Materialidad anticipa calidad</div></div>
+        <div class="journey-step"><span class="journey-icon">📱</span><div class="journey-name">Interactúa</div><div class="journey-desc">QR / menú simple y útil</div></div>
+        <div class="journey-step"><span class="journey-icon">🌮</span><div class="journey-name">Consume</div><div class="journey-desc">Sabor que cumple la promesa</div></div>
+        <div class="journey-step"><span class="journey-icon">♥</span><div class="journey-name">Recuerda</div><div class="journey-desc">Experiencia que se comparte</div></div>
+      </div>
+      <div class="principle-list fade-up" style="margin-top:1.5rem">
+        <div class="principle">Menos, pero con significado.</div>
+        <div class="principle">Cada elemento tiene propósito.</div>
+        <div class="principle">Materialidad &gt; decoración.</div>
+        <div class="principle">Coherencia &gt; creatividad aislada.</div>
+        <div class="principle">Experiencia &gt; pieza individual.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · DO/DONT + MANDATE -->
+  <section class="slide bg-dark" data-slide="10">
+    <div class="wrap">
+      <div class="fade-up label-tag">09 · Reglas del sistema</div>
+      <h2 class="stitle fade-up">Lo que sí,<br>lo que <span class="accent">no.</span></h2>
+      <div class="dodont fade-up">
+        <div class="dd-col yes">
+          <div class="dd-title">DO</div>
+          <div class="dd-item">Usar negro + kraft + dorado</div>
+          <div class="dd-item">Mantener símbolos mayas</div>
+          <div class="dd-item">Priorizar textura y material</div>
+          <div class="dd-item">Comunicar desde la autenticidad</div>
+        </div>
+        <div class="dd-col no">
+          <div class="dd-title">DON'T</div>
+          <div class="dd-item">Colores brillantes random</div>
+          <div class="dd-item">Saturar con gráficos</div>
+          <div class="dd-item">Modernizar en exceso</div>
+          <div class="dd-item">Usar stock visual genérico</div>
+        </div>
+      </div>
+      <div class="mandate fade-up">
+        <div class="mandate-label">Frase ancla</div>
+        <div class="mandate-text">"No es muerte, es tránsito.<br>No es final, es origen."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · CIERRE -->
+  <section class="slide bg-black" data-slide="11">
+    <div class="maya-corner tl"></div>
+    <div class="maya-corner tr"></div>
+    <div class="maya-corner bl"></div>
+    <div class="maya-corner br"></div>
+    <div class="wrap final-cta">
+      <div class="fade-up label-tag" style="justify-content:center">Fin · Propuesta 01</div>
+      <div class="fade-up final-mark">XIBALBÁ</div>
+      <div class="fade-up cv-rule" style="margin-top:1.5rem"></div>
+      <div class="fade-up final-tag">Inframundo Maya</div>
+      <p class="body fade-up" style="text-align:center;margin:2rem auto 0;color:rgba(245,229,200,.6);max-width:520px">Xibalbá no es solo una marca visual.<br><strong>Es un sistema coherente que transforma comida en experiencia.</strong></p>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-bottom">
+  <button class="nav-btn" id="btn-prev" aria-label="Anterior">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="btn-next" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const counterCur = document.getElementById('counter-cur');
+  const counterTotal = document.getElementById('counter-total');
+  const progress = document.getElementById('progress');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const dotsWrap = document.getElementById('dots');
+  let current = 0;
+  let isAnimating = false;
+
+  counterTotal.textContent = String(total).padStart(2,'0');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i===0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Ir a slide ' + (i+1));
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  }
+  const dots = document.querySelectorAll('.dot');
+
+  function update(){
+    slides.forEach((s, i) => {
+      s.classList.remove('active','prev');
+      if (i === current) s.classList.add('active');
+      else if (i < current) s.classList.add('prev');
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counterCur.textContent = String(current + 1).padStart(2, '0');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    const active = slides[current];
+    if (active) active.scrollTop = 0;
+    const activeDot = dots[current];
+    if (activeDot && activeDot.scrollIntoView) {
+      try { activeDot.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'}); } catch(e){}
+    }
+  }
+
+  function goTo(i){
+    if (isAnimating) return;
+    if (i < 0 || i >= total || i === current) return;
+    isAnimating = true;
+    current = i;
+    update();
+    setTimeout(() => { isAnimating = false; }, 450);
+  }
+  function next(){ goTo(current + 1); }
+  function prev(){ goTo(current - 1); }
+
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); next();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); prev();
+    } else if (e.key === 'Home') {
+      e.preventDefault(); goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); goTo(total - 1);
+    } else if (/^[0-9]$/.test(e.key)) {
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= total) goTo(n - 1);
+    }
+  });
+
+  let touchStartX = 0, touchStartY = 0, touchStartT = 0;
+  const SWIPE_THRESHOLD = 60;
+  const SWIPE_MAX_TIME = 600;
+  document.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY; touchStartT = Date.now();
+  }, {passive: true});
+  document.addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    const dt = Date.now() - touchStartT;
+    if (dt > SWIPE_MAX_TIME) return;
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if (Math.abs(dy) > Math.abs(dx) * 0.6) return;
+    if (dx < 0) next(); else prev();
+  }, {passive: true});
+
+  let wheelLock = false, wheelAccum = 0;
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (!isTouch) {
+    document.addEventListener('wheel', (e) => {
+      const active = slides[current];
+      const canScrollDown = active.scrollHeight - active.scrollTop - active.clientHeight > 4;
+      const canScrollUp = active.scrollTop > 4;
+      if (e.deltaY > 0 && canScrollDown) return;
+      if (e.deltaY < 0 && canScrollUp) return;
+      if (wheelLock) return;
+      wheelAccum += e.deltaY;
+      if (Math.abs(wheelAccum) > 80) {
+        wheelLock = true;
+        if (wheelAccum > 0) next(); else prev();
+        wheelAccum = 0;
+        setTimeout(() => { wheelLock = false; }, 700);
+      }
+    }, {passive: true});
+  }
+
+  update();
+})();
+</script>
+
+</body>
+</html>
